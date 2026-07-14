@@ -1,2415 +1,1034 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Studio Booking — Belmont AET</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      :root {
-        --bg: #0b0b0f;
-        --surface: #13131b;
-        --surface2: #1b1b26;
-        --surface3: #21212f;
-        --border: #252533;
-        --border2: #2e2e40;
-        --accent: #c8a86b;
-        --accent-bg: rgba(200, 168, 107, 0.1);
-        --text: #e6e2d9;
-        --muted: #8f8e9d;
-        --blue: #5b9cf6;
-        --blue-bg: rgba(91, 156, 246, 0.12);
-        --green: #4caf82;
-        --green-bg: rgba(76, 175, 130, 0.12);
-        --red: #f87171;
-        --red-bg: rgba(248, 113, 113, 0.12);
-        --orange: #fb923c;
-        --orange-bg: rgba(251, 146, 60, 0.12);
-        --purple: #c084fc;
-        --purple-bg: rgba(192, 132, 252, 0.12);
-        --grey: #6b7280;
-        --grey-bg: rgba(107, 114, 128, 0.12);
-        --sidebar: 264px;
-        --hdr: 52px;
-      }
-      html,
-      body {
-        height: 100%;
-        overflow: hidden;
-        background: var(--bg);
-        color: var(--text);
-        font-family: "Inter", system-ui, sans-serif;
-        font-size: 13px;
-      }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Booking — Belmont AET</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0b0f;--surface:#13131b;--surface2:#1b1b26;--surface3:#21212f;
+  --border:#252533;--border2:#2e2e40;
+  --accent:#c8a86b;--accent-bg:rgba(200,168,107,0.10);
+  --text:#e6e2d9;--muted:#8f8e9d;
+  --blue:#5b9cf6;--blue-bg:rgba(91,156,246,0.12);
+  --green:#4caf82;--green-bg:rgba(76,175,130,0.12);
+  --red:#f87171;--red-bg:rgba(248,113,113,0.12);
+  --orange:#fb923c;--orange-bg:rgba(251,146,60,0.12);
+  --purple:#c084fc;--purple-bg:rgba(192,132,252,0.12);
+  --grey:#6b7280;--grey-bg:rgba(107,114,128,0.12);
+  --sidebar:264px;--hdr:52px;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:13px}
 
-      /* BACKGROUND ORBS */
-      .hero-bg {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-        overflow: hidden;
-      }
-      .hero-orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(80px);
-        opacity: 0.15;
-        animation: drift 18s ease-in-out infinite alternate;
-      }
-      .hero-orb-1 {
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, #c8a86b 0%, transparent 70%);
-        top: -200px;
-        left: -200px;
-        animation-duration: 20s;
-      }
-      .hero-orb-2 {
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, #5b9cf6 0%, transparent 70%);
-        bottom: -100px;
-        right: -150px;
-        animation-duration: 16s;
-        animation-delay: -6s;
-        opacity: 0.1;
-      }
-      @keyframes drift {
-        0% {
-          transform: translate(0, 0) scale(1);
-        }
-        50% {
-          transform: translate(20px, -15px) scale(1.03);
-        }
-        100% {
-          transform: translate(-10px, 20px) scale(0.97);
-        }
-      }
+/* BACKGROUND ORBS */
+.hero-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.15;animation:drift 18s ease-in-out infinite alternate}
+.hero-orb-1{width:600px;height:600px;background:radial-gradient(circle,#c8a86b 0%,transparent 70%);top:-200px;left:-200px;animation-duration:20s}
+.hero-orb-2{width:500px;height:500px;background:radial-gradient(circle,#5b9cf6 0%,transparent 70%);bottom:-100px;right:-150px;animation-duration:16s;animation-delay:-6s;opacity:0.10}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-15px) scale(1.03)}100%{transform:translate(-10px,20px) scale(0.97)}}
 
-      /* APP SHELL */
-      #app {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-      }
+/* APP SHELL */
+#app{position:relative;z-index:1;display:flex;flex-direction:column;height:100vh}
 
-      /* HEADER */
-      .hdr {
-        height: var(--hdr);
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 18px;
-        flex-shrink: 0;
-      }
-      .hdr-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .wordmark {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 10px;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--accent);
-      }
-      .hdiv {
-        width: 1px;
-        height: 18px;
-        background: var(--border);
-      }
-      .app-title {
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--text);
-      }
-      .hdr-right {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .greeting {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 11px;
-        color: var(--accent);
-        letter-spacing: 0.04em;
-      }
-      .avatar {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: var(--accent-bg);
-        border: 1.5px solid var(--accent);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--accent);
-      }
+/* HEADER */
+.hdr{height:var(--hdr);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 18px;flex-shrink:0}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.wordmark{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent)}
+.hdiv{width:1px;height:18px;background:var(--border)}
+.app-title{font-size:14px;font-weight:600;color:var(--text)}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.greeting{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.04em}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--accent-bg);border:1.5px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--accent)}
 
-      /* BODY */
-      .body {
-        display: flex;
-        flex: 1;
-        overflow: hidden;
-      }
+/* BODY */
+.body{display:flex;flex:1;overflow:hidden}
 
-      /* SIDEBAR */
-      .sidebar {
-        width: var(--sidebar);
-        flex-shrink: 0;
-        background: var(--surface);
-        border-right: 1px solid var(--border);
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-      }
-      .sb-sec {
-        padding: 14px;
-        border-bottom: 1px solid var(--border);
-      }
-      .sb-sec:last-child {
-        border-bottom: none;
-      }
-      .sb-heading {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        font-weight: 500;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 11px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .sb-heading::before {
-        content: "";
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background: var(--accent);
-        flex-shrink: 0;
-      }
-      .ctrl-group {
-        margin-bottom: 10px;
-      }
-      .ctrl-group:last-child {
-        margin-bottom: 0;
-      }
-      .ctrl-label {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--muted);
-        display: block;
-        margin-bottom: 4px;
-      }
-      .ctrl-sel {
-        width: 100%;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        color: var(--text);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 10px;
-        padding: 6px 24px 6px 8px;
-        outline: none;
-        cursor: pointer;
-        appearance: none;
-        -webkit-appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238f8e9d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 8px center;
-        transition: border-color 0.15s;
-      }
-      .ctrl-sel:focus {
-        border-color: var(--accent);
-      }
-      .ctrl-sel option {
-        background: var(--surface2);
-      }
-      .ctrl-date {
-        width: 100%;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        color: var(--text);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 10px;
-        padding: 6px 8px;
-        outline: none;
-        transition: border-color 0.15s;
-      }
-      .ctrl-date:focus {
-        border-color: var(--accent);
-      }
-      .ctrl-date::-webkit-calendar-picker-indicator {
-        filter: invert(0.5);
-        cursor: pointer;
-      }
-      .view-btns {
-        display: flex;
-        gap: 3px;
-      }
-      .view-btn {
-        flex: 1;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        padding: 5px 3px;
-        cursor: pointer;
-        transition: all 0.12s;
-        text-align: center;
-      }
-      .view-btn.active {
-        background: var(--accent-bg);
-        border-color: var(--accent);
-        color: var(--accent);
-      }
-      .view-btn:hover:not(.active) {
-        border-color: var(--muted);
-        color: var(--text);
-      }
-      .filter-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-      }
-      .chip {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 8px;
-        font-weight: 500;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
-        padding: 3px 7px;
-        border-radius: 3px;
-        cursor: pointer;
-        border: 1px solid transparent;
-        opacity: 0.4;
-        transition: opacity 0.12s;
-      }
-      .chip.on {
-        opacity: 1;
-      }
-      .chip-available {
-        background: var(--green-bg);
-        color: var(--green);
-        border-color: rgba(76, 175, 130, 0.3);
-      }
-      .chip-requested {
-        background: var(--accent-bg);
-        color: var(--accent);
-        border-color: rgba(200, 168, 107, 0.3);
-      }
-      .chip-booked {
-        background: var(--red-bg);
-        color: var(--red);
-        border-color: rgba(248, 113, 113, 0.3);
-      }
-      .chip-maintenance {
-        background: var(--grey-bg);
-        color: var(--grey);
-        border-color: rgba(107, 114, 128, 0.3);
-      }
-      .chip-event {
-        background: var(--blue-bg);
-        color: var(--blue);
-        border-color: rgba(91, 156, 246, 0.3);
-      }
-      .chip-perk {
-        background: var(--purple-bg);
-        color: var(--purple);
-        border-color: rgba(192, 132, 252, 0.3);
-      }
-      .book-btn {
-        width: 100%;
-        background: var(--accent);
-        border: none;
-        border-radius: 4px;
-        color: #0b0b0f;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 10px;
-        font-weight: 500;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 10px;
-        cursor: pointer;
-        transition: opacity 0.15s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        margin-top: 4px;
-      }
-      .book-btn:hover {
-        opacity: 0.88;
-      }
-      .upcoming-list {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-      }
-      .upcoming-item {
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 9px 11px;
-        cursor: pointer;
-        transition: border-color 0.15s;
-        border-left: 3px solid transparent;
-      }
-      .upcoming-item:hover {
-        border-color: var(--accent);
-      }
-      .upcoming-title {
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--text);
-        margin-bottom: 2px;
-      }
-      .upcoming-meta {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        color: var(--muted);
-        line-height: 1.5;
-      }
-      .upcoming-empty {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 10px;
-        color: var(--muted);
-        text-align: center;
-        padding: 10px 0;
-        opacity: 0.6;
-      }
-      .b-available {
-        border-left-color: var(--green);
-      }
-      .b-requested {
-        border-left-color: var(--accent);
-      }
-      .b-booked {
-        border-left-color: var(--red);
-      }
-      .b-perk {
-        border-left-color: var(--purple);
-      }
-      .b-event {
-        border-left-color: var(--blue);
-      }
-      .legend {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-      }
-      .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        color: var(--muted);
-      }
-      .legend-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 2px;
-        flex-shrink: 0;
-      }
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column}
+.sb-sec{padding:14px;border-bottom:1px solid var(--border)}
+.sb-sec:last-child{border-bottom:none}
+.sb-heading{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:11px;display:flex;align-items:center;gap:6px}
+.sb-heading::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.ctrl-group{margin-bottom:10px}
+.ctrl-group:last-child{margin-bottom:0}
+.ctrl-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.ctrl-sel{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:6px 24px 6px 8px;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238f8e9d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color 0.15s}
+.ctrl-sel:focus{border-color:var(--accent)}
+.ctrl-sel option{background:var(--surface2)}
+.ctrl-date{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:6px 8px;outline:none;transition:border-color 0.15s}
+.ctrl-date:focus{border-color:var(--accent)}
+.ctrl-date::-webkit-calendar-picker-indicator{filter:invert(0.5);cursor:pointer}
+.view-btns{display:flex;gap:3px}
+.view-btn{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:3px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.05em;text-transform:uppercase;padding:5px 3px;cursor:pointer;transition:all 0.12s;text-align:center}
+.view-btn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+.view-btn:hover:not(.active){border-color:var(--muted);color:var(--text)}
+.filter-chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;padding:3px 7px;border-radius:3px;cursor:pointer;border:1px solid transparent;opacity:0.4;transition:opacity 0.12s}
+.chip.on{opacity:1}
+.chip-available{background:var(--green-bg);color:var(--green);border-color:rgba(76,175,130,0.3)}
+.chip-requested{background:var(--accent-bg);color:var(--accent);border-color:rgba(200,168,107,0.3)}
+.chip-booked{background:var(--red-bg);color:var(--red);border-color:rgba(248,113,113,0.3)}
+.chip-maintenance{background:var(--grey-bg);color:var(--grey);border-color:rgba(107,114,128,0.3)}
+.chip-event{background:var(--blue-bg);color:var(--blue);border-color:rgba(91,156,246,0.3)}
+.chip-perk{background:var(--purple-bg);color:var(--purple);border-color:rgba(192,132,252,0.3)}
+.book-btn{width:100%;background:var(--accent);border:none;border-radius:4px;color:#0b0b0f;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.10em;text-transform:uppercase;padding:10px;cursor:pointer;transition:opacity 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px}
+.book-btn:hover{opacity:0.88}
+.upcoming-list{display:flex;flex-direction:column;gap:5px}
+.upcoming-item{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:9px 11px;cursor:pointer;transition:border-color 0.15s;border-left:3px solid transparent}
+.upcoming-item:hover{border-color:var(--accent)}
+.upcoming-title{font-size:11px;font-weight:600;color:var(--text);margin-bottom:2px}
+.upcoming-meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);line-height:1.5}
+.upcoming-empty{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-align:center;padding:10px 0;opacity:0.6}
+.b-available{border-left-color:var(--green)}
+.b-requested{border-left-color:var(--accent)}
+.b-booked{border-left-color:var(--red)}
+.b-perk{border-left-color:var(--purple)}
+.b-event{border-left-color:var(--blue)}
+.legend{display:flex;flex-direction:column;gap:5px}
+.legend-item{display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted)}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
 
-      /* CALENDAR AREA */
-      .cal-area {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-      }
-      .cal-toolbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 8px 14px;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        flex-shrink: 0;
-        gap: 10px;
-      }
-      .cal-nav {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .nav-btn {
-        width: 28px;
-        height: 28px;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        color: var(--muted);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.12s;
-        font-size: 16px;
-        line-height: 1;
-      }
-      .nav-btn:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-      }
-      .today-btn {
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        color: var(--muted);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        padding: 5px 10px;
-        cursor: pointer;
-        transition: all 0.12s;
-      }
-      .today-btn:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-      }
-      .cal-label {
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text);
-        letter-spacing: -0.01em;
-      }
-      .cal-scroll {
-        flex: 1;
-        overflow-y: auto;
-        overflow-x: hidden;
-      }
-      .cal-grid {
-        display: flex;
-        position: relative;
-      }
-      .time-gutter {
-        width: 54px;
-        flex-shrink: 0;
-        position: relative;
-      }
-      .time-label {
-        position: absolute;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        color: var(--muted);
-        right: 8px;
-        transform: translateY(-50%);
-        white-space: nowrap;
-        pointer-events: none;
-      }
-      .day-header-row {
-        display: flex;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        flex-shrink: 0;
-      }
-      .day-header-gutter {
-        width: 54px;
-        flex-shrink: 0;
-      }
-      .day-header {
-        flex: 1;
-        text-align: center;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
-        color: var(--muted);
-        padding: 7px 4px;
-        border-left: 1px solid var(--border);
-      }
-      .day-header.is-today {
-        color: var(--accent);
-      }
-      .day-cols {
-        flex: 1;
-        display: flex;
-        position: relative;
-      }
-      .day-col {
-        flex: 1;
-        border-left: 1px solid var(--border);
-        position: relative;
-        cursor: crosshair;
-      }
-      .hour-line {
-        position: absolute;
-        left: 0;
-        right: 0;
-        border-top: 1px solid var(--border);
-        pointer-events: none;
-      }
-      .half-line {
-        position: absolute;
-        left: 0;
-        right: 0;
-        border-top: 1px dashed rgba(37, 37, 51, 0.6);
-        pointer-events: none;
-      }
-      .now-line {
-        position: absolute;
-        left: 0;
-        right: 0;
-        border-top: 2px solid var(--red);
-        z-index: 5;
-        pointer-events: none;
-      }
-      .now-dot {
-        position: absolute;
-        left: -4px;
-        top: -4px;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--red);
-      }
-      .cal-event {
-        position: absolute;
-        left: 2px;
-        right: 2px;
-        border-radius: 3px;
-        padding: 3px 6px;
-        font-size: 10px;
-        font-weight: 500;
-        cursor: pointer;
-        overflow: hidden;
-        z-index: 3;
-        border-left: 3px solid transparent;
-        transition: opacity 0.12s;
-        user-select: none;
-      }
-      .cal-event:hover {
-        opacity: 0.82;
-        z-index: 4;
-      }
-      .cal-event-title {
-        line-height: 1.3;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .cal-event-time {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        opacity: 0.75;
-        margin-top: 1px;
-      }
-      .ev-available {
-        background: rgba(76, 175, 130, 0.35);
-        border-left-color: var(--green);
-        color: var(--green);
-      }
-      .ev-requested {
-        background: rgba(200, 168, 107, 0.2);
-        border-left-color: var(--accent);
-        color: var(--accent);
-      }
-      .ev-booked {
-        background: rgba(248, 113, 113, 0.2);
-        border-left-color: var(--red);
-        color: var(--red);
-      }
-      .ev-maintenance {
-        background: rgba(107, 114, 128, 0.2);
-        border-left-color: var(--grey);
-        color: var(--grey);
-      }
-      .ev-event {
-        background: rgba(91, 156, 246, 0.2);
-        border-left-color: var(--blue);
-        color: var(--blue);
-      }
-      .ev-perk {
-        background: rgba(192, 132, 252, 0.2);
-        border-left-color: var(--purple);
-        color: var(--purple);
-      }
-      .drag-sel {
-        position: absolute;
-        background: rgba(200, 168, 107, 0.12);
-        border: 1px dashed var(--accent);
-        border-radius: 3px;
-        z-index: 6;
-        pointer-events: none;
-        left: 2px;
-        right: 2px;
-      }
+/* CALENDAR AREA */
+.cal-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.cal-toolbar{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;gap:10px}
+.cal-nav{display:flex;align-items:center;gap:6px}
+.nav-btn{width:28px;height:28px;background:var(--surface2);border:1px solid var(--border);border-radius:3px;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s;font-size:16px;line-height:1}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.today-btn{background:var(--surface2);border:1px solid var(--border);border-radius:3px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;padding:5px 10px;cursor:pointer;transition:all 0.12s}
+.today-btn:hover{border-color:var(--accent);color:var(--accent)}
+.cal-label{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-0.01em}
+.cal-scroll{flex:1;overflow-y:auto;overflow-x:hidden}
+.cal-grid{display:flex;position:relative}
+.time-gutter{width:54px;flex-shrink:0;position:relative}
+.time-label{position:absolute;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);right:8px;transform:translateY(-50%);white-space:nowrap;pointer-events:none}
+.day-header-row{display:flex;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0}
+.day-header-gutter{width:54px;flex-shrink:0}
+.day-header{flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);padding:7px 4px;border-left:1px solid var(--border)}
+.day-header.is-today{color:var(--accent)}
+.day-cols{flex:1;display:flex;position:relative}
+.day-col{flex:1;border-left:1px solid var(--border);position:relative;cursor:crosshair}
+.hour-line{position:absolute;left:0;right:0;border-top:1px solid var(--border);pointer-events:none}
+.half-line{position:absolute;left:0;right:0;border-top:1px dashed rgba(37,37,51,0.6);pointer-events:none}
+.now-line{position:absolute;left:0;right:0;border-top:2px solid var(--red);z-index:5;pointer-events:none}
+.now-dot{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--red)}
+.cal-event{position:absolute;left:2px;right:2px;border-radius:3px;padding:3px 6px;font-size:10px;font-weight:500;cursor:pointer;overflow:hidden;z-index:3;border-left:3px solid transparent;transition:opacity 0.12s;user-select:none}
+.cal-event:hover{opacity:0.82;z-index:4}
+.cal-event-title{line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-event-time{font-family:'IBM Plex Mono',monospace;font-size:9px;opacity:0.75;margin-top:1px}
+.ev-available{background:rgba(76,175,130,0.35);border-left-color:var(--green);color:var(--green)}
+.ev-requested{background:rgba(200,168,107,0.20);border-left-color:var(--accent);color:var(--accent)}
+.ev-booked{background:rgba(248,113,113,0.20);border-left-color:var(--red);color:var(--red)}
+.ev-maintenance{background:rgba(107,114,128,0.20);border-left-color:var(--grey);color:var(--grey)}
+.ev-event{background:rgba(91,156,246,0.20);border-left-color:var(--blue);color:var(--blue)}
+.ev-perk{background:rgba(192,132,252,0.20);border-left-color:var(--purple);color:var(--purple)}
+.drag-sel{position:absolute;background:rgba(200,168,107,0.12);border:1px dashed var(--accent);border-radius:3px;z-index:6;pointer-events:none;left:2px;right:2px}
 
-      /* MODAL */
-      .overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(11, 11, 15, 0.88);
-        z-index: 200;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
-      .overlay.open {
-        display: flex;
-      }
-      .modal {
-        width: 100%;
-        max-width: 480px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 7px;
-        overflow: hidden;
-        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7);
-        max-height: 90vh;
-        display: flex;
-        flex-direction: column;
-      }
-      .modal-hdr {
-        padding: 14px 16px 12px;
-        border-bottom: 1px solid var(--border);
-        background: var(--surface2);
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 10px;
-        flex-shrink: 0;
-      }
-      .modal-title {
-        font-size: 15px;
-        font-weight: 700;
-        color: var(--text);
-        margin-bottom: 4px;
-      }
-      .modal-sub {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 10px;
-        color: var(--muted);
-      }
-      .modal-x {
-        background: none;
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        color: var(--muted);
-        cursor: pointer;
-        font-size: 14px;
-        line-height: 1;
-        padding: 3px 7px;
-        transition: all 0.12s;
-        flex-shrink: 0;
-      }
-      .modal-x:hover {
-        border-color: var(--muted);
-        color: var(--text);
-      }
-      .modal-body {
-        padding: 14px 16px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        flex: 1;
-      }
-      .m-field {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-      .m-label {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--accent);
-      }
-      .m-value {
-        font-size: 12px;
-        color: var(--text);
-        line-height: 1.5;
-      }
-      .m-value.muted {
-        color: var(--muted);
-      }
-      .m-input {
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        color: var(--text);
-        font-family: "Inter", sans-serif;
-        font-size: 12px;
-        padding: 7px 9px;
-        outline: none;
-        width: 100%;
-        transition: border-color 0.15s;
-      }
-      .m-input:focus {
-        border-color: var(--accent);
-      }
-      .m-input::placeholder {
-        color: var(--muted);
-      }
-      .m-textarea {
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        color: var(--text);
-        font-family: "Inter", sans-serif;
-        font-size: 12px;
-        padding: 7px 9px;
-        outline: none;
-        width: 100%;
-        resize: vertical;
-        min-height: 70px;
-        transition: border-color 0.15s;
-      }
-      .m-textarea:focus {
-        border-color: var(--accent);
-      }
-      .m-textarea::placeholder {
-        color: var(--muted);
-      }
-      .m-sel {
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        color: var(--text);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 11px;
-        padding: 7px 24px 7px 9px;
-        outline: none;
-        width: 100%;
-        cursor: pointer;
-        appearance: none;
-        -webkit-appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238f8e9d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 8px center;
-        transition: border-color 0.15s;
-      }
-      .m-sel:focus {
-        border-color: var(--accent);
-      }
-      .m-sel option {
-        background: var(--surface2);
-      }
-      .m-time-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-      .m-divider {
-        height: 1px;
-        background: var(--border);
-      }
-      .m-placeholder {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 9px;
-        color: var(--orange);
-        padding: 5px 8px;
-        background: var(--orange-bg);
-        border: 1px solid rgba(251, 146, 60, 0.2);
-        border-radius: 3px;
-        letter-spacing: 0.04em;
-      }
-      .modal-ftr {
-        display: flex;
-        gap: 7px;
-        padding: 12px 16px;
-        border-top: 1px solid var(--border);
-        background: var(--surface2);
-        flex-shrink: 0;
-        flex-wrap: wrap;
-      }
-      .m-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 8px 14px;
-        border-radius: 4px;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 10px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: opacity 0.15s;
-        border: none;
-      }
-      .m-btn:hover {
-        opacity: 0.85;
-      }
-      .btn-primary {
-        background: var(--accent);
-        color: #0b0b0f;
-      }
-      .btn-danger {
-        background: var(--red-bg);
-        color: var(--red);
-        border: 1px solid rgba(248, 113, 113, 0.3) !important;
-      }
-      .btn-ghost {
-        background: var(--surface);
-        color: var(--muted);
-        border: 1px solid var(--border) !important;
-      }
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(11,11,15,0.88);z-index:200;align-items:center;justify-content:center;padding:20px}
+.overlay.open{display:flex}
+.modal{width:100%;max-width:480px;background:var(--surface);border:1px solid var(--border);border-radius:7px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.7);max-height:90vh;display:flex;flex-direction:column}
+.modal-hdr{padding:14px 16px 12px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-shrink:0}
+.modal-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.modal-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+.modal-x{background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);cursor:pointer;font-size:14px;line-height:1;padding:3px 7px;transition:all 0.12s;flex-shrink:0}
+.modal-x:hover{border-color:var(--muted);color:var(--text)}
+.modal-body{padding:14px 16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;flex:1}
+.m-field{display:flex;flex-direction:column;gap:4px}
+.m-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.10em;text-transform:uppercase;color:var(--accent)}
+.m-value{font-size:12px;color:var(--text);line-height:1.5}
+.m-value.muted{color:var(--muted)}
+.m-input{background:var(--surface2);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'Inter',sans-serif;font-size:12px;padding:7px 9px;outline:none;width:100%;transition:border-color 0.15s}
+.m-input:focus{border-color:var(--accent)}
+.m-input::placeholder{color:var(--muted)}
+.m-textarea{background:var(--surface2);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'Inter',sans-serif;font-size:12px;padding:7px 9px;outline:none;width:100%;resize:vertical;min-height:70px;transition:border-color 0.15s}
+.m-textarea:focus{border-color:var(--accent)}
+.m-textarea::placeholder{color:var(--muted)}
+.m-sel{background:var(--surface2);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:7px 24px 7px 9px;outline:none;width:100%;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238f8e9d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color 0.15s}
+.m-sel:focus{border-color:var(--accent)}
+.m-sel option{background:var(--surface2)}
+.m-time-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.m-divider{height:1px;background:var(--border)}
+.m-placeholder{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--orange);padding:5px 8px;background:var(--orange-bg);border:1px solid rgba(251,146,60,0.2);border-radius:3px;letter-spacing:0.04em}
+.modal-ftr{display:flex;gap:7px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface2);flex-shrink:0;flex-wrap:wrap}
+.m-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:opacity 0.15s;border:none}
+.m-btn:hover{opacity:0.85}
+.btn-primary{background:var(--accent);color:#0b0b0f}
+.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,0.3) !important}
+.btn-ghost{background:var(--surface);color:var(--muted);border:1px solid var(--border) !important}
 
-      /* CONFIRM */
-      .confirm-ov {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(11, 11, 15, 0.92);
-        z-index: 300;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
-      .confirm-ov.open {
-        display: flex;
-      }
-      .confirm-box {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 7px;
-        padding: 22px;
-        max-width: 320px;
-        width: 100%;
-        text-align: center;
-        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7);
-      }
-      .confirm-icon {
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-      .confirm-title {
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--text);
-        margin-bottom: 7px;
-      }
-      .confirm-msg {
-        font-size: 12px;
-        color: var(--muted);
-        margin-bottom: 18px;
-        line-height: 1.5;
-      }
-      .confirm-actions {
-        display: flex;
-        gap: 8px;
-        justify-content: center;
-      }
+/* CONFIRM */
+.confirm-ov{display:none;position:fixed;inset:0;background:rgba(11,11,15,0.92);z-index:300;align-items:center;justify-content:center;padding:20px}
+.confirm-ov.open{display:flex}
+.confirm-box{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:22px;max-width:320px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,0.7)}
+.confirm-icon{font-size:24px;margin-bottom:10px}
+.confirm-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:7px}
+.confirm-msg{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+.confirm-actions{display:flex;gap:8px;justify-content:center}
 
-      /* CONFLICT FLASH */
-      .conflict-flash {
-        display: none;
-        position: fixed;
-        top: 62px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--red-bg);
-        border: 1px solid rgba(248, 113, 113, 0.4);
-        border-radius: 4px;
-        padding: 9px 18px;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 10px;
-        color: var(--red);
-        z-index: 400;
-        white-space: nowrap;
-      }
+/* CONFLICT FLASH */
+.conflict-flash{display:none;position:fixed;top:62px;left:50%;transform:translateX(-50%);background:var(--red-bg);border:1px solid rgba(248,113,113,0.4);border-radius:4px;padding:9px 18px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--red);z-index:400;white-space:nowrap}
 
-      /* FLOATING NAV */
-      .belmont-nav {
-        position: fixed;
-        z-index: 150;
-        bottom: 20px;
-        right: 20px;
-      }
-      .belmont-nav-toggle {
-        width: 38px;
-        height: 38px;
-        background: var(--surface);
-        border: 1.5px solid var(--accent);
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background 0.15s;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-      }
-      .belmont-nav-toggle:hover {
-        background: var(--surface2);
-      }
-      .belmont-nav-toggle svg {
-        width: 16px;
-        height: 16px;
-      }
-      .belmont-nav-toggle svg rect {
-        fill: var(--accent);
-      }
-      .belmont-nav-menu {
-        position: absolute;
-        bottom: 46px;
-        right: 0;
-        min-width: 196px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        overflow: hidden;
-        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        transform: translateY(6px);
-        pointer-events: none;
-        transition:
-          opacity 0.15s ease,
-          transform 0.15s ease;
-      }
-      .belmont-nav.open .belmont-nav-menu {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-      .belmont-nav-link {
-        display: flex;
-        align-items: center;
-        gap: 11px;
-        padding: 11px 14px;
-        text-decoration: none;
-        border-bottom: 1px solid var(--border);
-        transition: background 0.12s;
-      }
-      .belmont-nav-link:last-child {
-        border-bottom: none;
-      }
-      .belmont-nav-link:hover {
-        background: var(--surface2);
-      }
-      .belmont-nav-link-icon {
-        width: 28px;
-        height: 28px;
-        border-radius: 5px;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        color: var(--accent);
-      }
-      .belmont-nav-link-icon svg {
-        width: 15px;
-        height: 15px;
-      }
-      .belmont-nav-link-label {
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 11px;
-        font-weight: 500;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--accent);
-      }
-      .belmont-nav-link.is-current .belmont-nav-link-icon {
-        color: var(--blue);
-        border-color: var(--blue);
-        box-shadow: 0 0 0 3px rgba(91, 156, 246, 0.18);
-      }
-      .belmont-nav-link.is-current .belmont-nav-link-label {
-        color: var(--blue);
-      }
+/* FLOATING NAV */
+.belmont-nav{position:fixed;z-index:150;bottom:20px;right:20px}
+.belmont-nav-toggle{width:38px;height:38px;background:var(--surface);border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.15s;box-shadow:0 4px 14px rgba(0,0,0,0.35)}
+.belmont-nav-toggle:hover{background:var(--surface2)}
+.belmont-nav-toggle svg{width:16px;height:16px}
+.belmont-nav-toggle svg rect{fill:var(--accent)}
+.belmont-nav-menu{position:absolute;bottom:46px;right:0;min-width:196px;background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 16px 44px rgba(0,0,0,0.5);opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity 0.15s ease,transform 0.15s ease}
+.belmont-nav.open .belmont-nav-menu{opacity:1;transform:translateY(0);pointer-events:auto}
+.belmont-nav-link{display:flex;align-items:center;gap:11px;padding:11px 14px;text-decoration:none;border-bottom:1px solid var(--border);transition:background 0.12s}
+.belmont-nav-link:last-child{border-bottom:none}
+.belmont-nav-link:hover{background:var(--surface2)}
+.belmont-nav-link-icon{width:28px;height:28px;border-radius:5px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent)}
+.belmont-nav-link-icon svg{width:15px;height:15px}
+.belmont-nav-link-label{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent)}
+.belmont-nav-link.is-current .belmont-nav-link-icon{color:var(--blue);border-color:var(--blue);box-shadow:0 0 0 3px rgba(91,156,246,0.18)}
+.belmont-nav-link.is-current .belmont-nav-link-label{color:var(--blue)}
 
-      /* FOOTER */
-      .page-footer {
-        background: var(--surface);
-        border-top: 1px solid var(--border);
-        padding: 14px 20px;
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 10px;
-        letter-spacing: 0.08em;
-        color: var(--muted);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        flex-shrink: 0;
-      }
-      .footer-nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 6px 4px;
-        align-items: center;
-      }
-      .footer-nav a {
-        color: var(--accent);
-        text-decoration: none;
-        transition: color 0.15s;
-      }
-      .footer-nav a:hover {
-        color: var(--blue);
-      }
-      .footer-nav span {
-        opacity: 0.4;
-      }
-      .footer-meta {
-        opacity: 0.5;
-      }
-      .footer-meta a {
-        color: var(--muted);
-        text-decoration: none;
-        transition: color 0.15s;
-      }
-      .footer-meta a:hover {
-        color: var(--accent);
-      }
+/* FOOTER */
+.page-footer{background:var(--surface);border-top:1px solid var(--border);padding:14px 20px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0}
+.footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 4px;align-items:center}
+.footer-nav a{color:var(--accent);text-decoration:none;transition:color 0.15s}
+.footer-nav a:hover{color:var(--blue)}
+.footer-nav span{opacity:0.4}
+.footer-meta{opacity:0.5}
+.footer-meta a{color:var(--muted);text-decoration:none;transition:color 0.15s}
+.footer-meta a:hover{color:var(--accent)}
 
-      /* MOBILE */
-      @media (max-width: 768px) {
-        html,
-        body {
-          overflow: auto;
-          height: auto;
-        }
-        #app {
-          height: auto;
-          min-height: 100vh;
-        }
-        .body {
-          flex-direction: column;
-          overflow: visible;
-        }
-        .sidebar {
-          width: 100%;
-          border-right: none;
-          border-bottom: 1px solid var(--border);
-          overflow: visible;
-        }
-        .cal-area {
-          overflow: visible;
-        }
-        .cal-scroll {
-          overflow: visible;
-          height: auto;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="hero-bg" aria-hidden="true">
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
+/* MOBILE */
+@media(max-width:768px){
+  html,body{overflow:auto;height:auto}
+  #app{height:auto;min-height:100vh}
+  .body{flex-direction:column;overflow:visible}
+  .sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);overflow:visible}
+  .cal-area{overflow:visible}
+  .cal-scroll{overflow:visible;height:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="hero-bg" aria-hidden="true">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+</div>
+
+<div class="conflict-flash" id="conflictFlash">&#9888; Time slot unavailable &mdash; choose another time</div>
+
+<!-- Floating Nav -->
+<div class="belmont-nav" id="belmontNav">
+  <button class="belmont-nav-toggle" id="belmontNavToggle" aria-label="Open navigation" aria-expanded="false">
+    <svg viewBox="0 0 16 16"><rect x="2" y="4" width="12" height="1.6" rx="0.8"/><rect x="2" y="7.2" width="12" height="1.6" rx="0.8"/><rect x="2" y="10.4" width="12" height="1.6" rx="0.8"/></svg>
+  </button>
+  <nav class="belmont-nav-menu">
+    <a class="belmont-nav-link" href="https://bradwintersmusic-cloud.github.io/studio-home/">
+      <span class="belmont-nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg></span>
+      <span class="belmont-nav-link-label">Studio Hub</span>
+    </a>
+    <a class="belmont-nav-link is-current" href="#">
+      <span class="belmont-nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+      <span class="belmont-nav-link-label">Booking</span>
+    </a>
+    <a class="belmont-nav-link" href="https://bradwintersmusic-cloud.github.io/studio-news/">
+      <span class="belmont-nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M21.57 3.18a.98.98 0 0 0-.92-.11L7.82 8H4.01c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h3.81l1 .39l-.47 1.4c-.33 1 .17 2.1 1.15 2.49l3.14 1.26c.24.09.49.14.74.14c.29 0 .58-.06.84-.19c.5-.23.88-.66 1.05-1.18l.42-1.27l4.93 1.9c.12.04.24.07.36.07c.2 0 .4-.06.57-.18c.27-.19.43-.5.43-.82V4c0-.33-.16-.64-.43-.82ZM4 10h3v4H4zm9.39 9.68l-3.14-1.26l.44-1.32l3.15 1.21l-.45 1.36ZM20 18.55L9 14.32V9.69l11-4.23z"/></svg></span>
+      <span class="belmont-nav-link-label">AET News</span>
+    </a>
+    <a class="belmont-nav-link" href="https://bradwintersmusic-cloud.github.io/studio-tools/">
+      <span class="belmont-nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+      <span class="belmont-nav-link-label">Studio Tools</span>
+    </a>
+  </nav>
+</div>
+
+<div id="app">
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="wordmark">Belmont &middot; AET</div>
+      <div class="hdiv"></div>
+      <div class="app-title">Studio Booking</div>
     </div>
-
-    <div class="conflict-flash" id="conflictFlash">
-      &#9888; Time slot unavailable &mdash; choose another time
+    <div class="hdr-right">
+      <div class="greeting">Let's book it, Brad!</div>
+      <div class="avatar">B</div>
     </div>
+  </div>
 
-    <!-- Floating Nav -->
-    <div class="belmont-nav" id="belmontNav">
-      <button
-        class="belmont-nav-toggle"
-        id="belmontNavToggle"
-        aria-label="Open navigation"
-        aria-expanded="false"
-      >
-        <svg viewBox="0 0 16 16">
-          <rect x="2" y="4" width="12" height="1.6" rx="0.8" />
-          <rect x="2" y="7.2" width="12" height="1.6" rx="0.8" />
-          <rect x="2" y="10.4" width="12" height="1.6" rx="0.8" />
-        </svg>
-      </button>
-      <nav class="belmont-nav-menu">
-        <a
-          class="belmont-nav-link"
-          href="https://bradwintersmusic-cloud.github.io/studio-home/"
-        >
-          <span class="belmont-nav-link-icon"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
-              <path d="M9 21V12h6v9" /></svg
-          ></span>
-          <span class="belmont-nav-link-label">Studio Hub</span>
-        </a>
-        <a class="belmont-nav-link is-current" href="#">
-          <span class="belmont-nav-link-icon"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect x="3" y="4" width="18" height="18" rx="2" />
-              <path d="M16 2v4M8 2v4M3 10h18" /></svg
-          ></span>
-          <span class="belmont-nav-link-label">Booking</span>
-        </a>
-        <a
-          class="belmont-nav-link"
-          href="https://bradwintersmusic-cloud.github.io/studio-news/"
-        >
-          <span class="belmont-nav-link-icon"
-            ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M21.57 3.18a.98.98 0 0 0-.92-.11L7.82 8H4.01c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h3.81l1 .39l-.47 1.4c-.33 1 .17 2.1 1.15 2.49l3.14 1.26c.24.09.49.14.74.14c.29 0 .58-.06.84-.19c.5-.23.88-.66 1.05-1.18l.42-1.27l4.93 1.9c.12.04.24.07.36.07c.2 0 .4-.06.57-.18c.27-.19.43-.5.43-.82V4c0-.33-.16-.64-.43-.82ZM4 10h3v4H4zm9.39 9.68l-3.14-1.26l.44-1.32l3.15 1.21l-.45 1.36ZM20 18.55L9 14.32V9.69l11-4.23z"
-              /></svg
-          ></span>
-          <span class="belmont-nav-link-label">AET News</span>
-        </a>
-        <a
-          class="belmont-nav-link"
-          href="https://bradwintersmusic-cloud.github.io/studio-tools/"
-        >
-          <span class="belmont-nav-link-icon"
-            ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
-              /></svg
-          ></span>
-          <span class="belmont-nav-link-label">Studio Tools</span>
-        </a>
-      </nav>
-    </div>
+  <!-- BODY -->
+  <div class="body">
 
-    <div id="app">
-      <!-- HEADER -->
-      <div class="hdr">
-        <div class="hdr-left">
-          <div class="wordmark">Belmont &middot; AET</div>
-          <div class="hdiv"></div>
-          <div class="app-title">Studio Booking</div>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- Controls -->
+      <div class="sb-sec">
+        <div class="sb-heading">Controls</div>
+        <div class="ctrl-group">
+          <label class="ctrl-label">Facility</label>
+          <select class="ctrl-sel" id="facSel"></select>
         </div>
-        <div class="hdr-right">
-          <div class="greeting">Let's book it, Brad!</div>
-          <div class="avatar">B</div>
+        <div class="ctrl-group">
+          <label class="ctrl-label">Studio / Room</label>
+          <select class="ctrl-sel" id="studioSel"></select>
+        </div>
+        <div class="ctrl-group">
+          <label class="ctrl-label">View</label>
+          <div class="view-btns" id="viewBtns">
+            <button class="view-btn" data-v="day">Day</button>
+            <button class="view-btn" data-v="3day">3 Day</button>
+            <button class="view-btn active" data-v="week">Week</button>
+            <button class="view-btn" data-v="month">Month</button>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <label class="ctrl-label">Jump to Date</label>
+          <input type="date" class="ctrl-date" id="jumpDate">
+        </div>
+        <div class="ctrl-group">
+          <label class="ctrl-label">Filter by Status</label>
+          <div class="filter-chips" id="filterChips">
+            <span class="chip chip-available on" data-s="available">Available</span>
+            <span class="chip chip-requested on" data-s="requested">Pending</span>
+            <span class="chip chip-booked on" data-s="booked">Booked</span>
+            <span class="chip chip-maintenance on" data-s="maintenance">Maint.</span>
+            <span class="chip chip-event on" data-s="event">Event</span>
+            <span class="chip chip-perk on" data-s="perk">Perk</span>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <button class="book-btn" id="bookBtn">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+            Book a Session
+          </button>
         </div>
       </div>
 
-      <!-- BODY -->
-      <div class="body">
-        <!-- SIDEBAR -->
-        <div class="sidebar">
-          <!-- Controls -->
-          <div class="sb-sec">
-            <div class="sb-heading">Controls</div>
-            <div class="ctrl-group">
-              <label class="ctrl-label">Facility</label>
-              <select class="ctrl-sel" id="facSel"></select>
-            </div>
-            <div class="ctrl-group">
-              <label class="ctrl-label">Studio / Room</label>
-              <select class="ctrl-sel" id="studioSel"></select>
-            </div>
-            <div class="ctrl-group">
-              <label class="ctrl-label">View</label>
-              <div class="view-btns" id="viewBtns">
-                <button class="view-btn" data-v="day">Day</button>
-                <button class="view-btn" data-v="3day">3 Day</button>
-                <button class="view-btn active" data-v="week">Week</button>
-                <button class="view-btn" data-v="month">Month</button>
-              </div>
-            </div>
-            <div class="ctrl-group">
-              <label class="ctrl-label">Jump to Date</label>
-              <input type="date" class="ctrl-date" id="jumpDate" />
-            </div>
-            <div class="ctrl-group">
-              <label class="ctrl-label">Filter by Status</label>
-              <div class="filter-chips" id="filterChips">
-                <span class="chip chip-available on" data-s="available"
-                  >Available</span
-                >
-                <span class="chip chip-requested on" data-s="requested"
-                  >Pending</span
-                >
-                <span class="chip chip-booked on" data-s="booked">Booked</span>
-                <span class="chip chip-maintenance on" data-s="maintenance"
-                  >Maint.</span
-                >
-                <span class="chip chip-event on" data-s="event">Event</span>
-                <span class="chip chip-perk on" data-s="perk">Perk</span>
-              </div>
-            </div>
-            <div class="ctrl-group">
-              <button class="book-btn" id="bookBtn">
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                >
-                  <line x1="8" y1="2" x2="8" y2="14" />
-                  <line x1="2" y1="8" x2="14" y2="8" />
-                </svg>
-                Book a Session
-              </button>
-            </div>
-          </div>
+      <!-- Upcoming Sessions -->
+      <div class="sb-sec">
+        <div class="sb-heading">Upcoming Sessions</div>
+        <div class="upcoming-list" id="upcomingList"></div>
+      </div>
 
-          <!-- Upcoming Sessions -->
-          <div class="sb-sec">
-            <div class="sb-heading">Upcoming Sessions</div>
-            <div class="upcoming-list" id="upcomingList"></div>
-          </div>
-
-          <!-- Legend -->
-          <div class="sb-sec">
-            <div class="sb-heading">Legend</div>
-            <div class="legend">
-              <div class="legend-item">
-                <div class="legend-dot" style="background: var(--green)"></div>
-                Available / Claimable
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot" style="background: var(--accent)"></div>
-                Pending Approval
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot" style="background: var(--red)"></div>
-                Booked / Confirmed
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot" style="background: var(--blue)"></div>
-                Event / Class
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot" style="background: var(--purple)"></div>
-                Perk / Flex
-              </div>
-              <div class="legend-item">
-                <div class="legend-dot" style="background: var(--grey)"></div>
-                Maintenance / Blackout
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CALENDAR AREA -->
-        <div class="cal-area">
-          <div class="cal-toolbar">
-            <div class="cal-nav">
-              <button class="nav-btn" id="prevBtn">&#8249;</button>
-              <button class="today-btn" id="todayBtn">Today</button>
-              <button class="nav-btn" id="nextBtn">&#8250;</button>
-            </div>
-            <div class="cal-label" id="calLabel"></div>
-          </div>
-          <div class="day-header-row" id="dayHeaderRow">
-            <div class="day-header-gutter"></div>
-          </div>
-          <div class="cal-scroll" id="calScroll">
-            <div class="cal-grid" id="calGrid">
-              <div class="time-gutter" id="timeGutter"></div>
-              <div class="day-cols" id="dayCols"></div>
-            </div>
-          </div>
+      <!-- Legend -->
+      <div class="sb-sec">
+        <div class="sb-heading">Legend</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Available / Claimable</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Pending Approval</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Booked / Confirmed</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Event / Class</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Perk / Flex</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--grey)"></div>Maintenance / Blackout</div>
         </div>
       </div>
 
-      <!-- FOOTER -->
-      <footer class="page-footer">
-        <nav class="footer-nav">
-          <a href="https://bradwintersmusic-cloud.github.io/studio-home/"
-            >Studio Hub</a
-          >
-          <span>|</span>
-          <a href="https://bradwintersmusic-cloud.github.io/studio-news/"
-            >AET News</a
-          >
-          <span>|</span>
-          <a
-            href="https://bradwintersmusic-cloud.github.io/studioassistant-sync/"
-            >Studio Schedule</a
-          >
-          <span>|</span>
-          <a href="https://bradwintersmusic-cloud.github.io/studio-videos/"
-            >Video Library</a
-          >
-          <span>|</span>
-          <a href="https://bradwintersmusic-cloud.github.io/studio-policies/"
-            >Policies</a
-          >
-          <span>|</span>
-          <a href="https://bradwintersmusic-cloud.github.io/studio-tools/"
-            >Studio Tools</a
-          >
-          <span>|</span>
-          <a href="https://bradwintersmusic-cloud.github.io/studio-musicians/"
-            >Session Musicians</a
-          >
-          <span>|</span>
-          <a href="https://bradwintersmusic-cloud.github.io/studio-resources/"
-            >Resources</a
-          >
-          <span>|</span>
-          <a href="https://bradwintersmusic-cloud.github.io/studio-contact/"
-            >Contact</a
-          >
-        </nav>
-        <div class="footer-meta">
-          Belmont University &middot; Audio Engineering Technology &middot; CEMB
-        </div>
-        <div class="footer-meta">
-          <a href="mailto:brad.winters@belmont.edu">brad.winters@belmont.edu</a>
-        </div>
-      </footer>
     </div>
 
-    <!-- Booking Modal -->
-    <div class="overlay" id="modalOv">
-      <div class="modal">
-        <div class="modal-hdr">
-          <div>
-            <div class="modal-title" id="mTitle">New Session</div>
-            <div class="modal-sub" id="mSub"></div>
-          </div>
-          <button class="modal-x" id="mClose">&#x2715;</button>
+    <!-- CALENDAR AREA -->
+    <div class="cal-area">
+      <div class="cal-toolbar">
+        <div class="cal-nav">
+          <button class="nav-btn" id="prevBtn">&#8249;</button>
+          <button class="today-btn" id="todayBtn">Today</button>
+          <button class="nav-btn" id="nextBtn">&#8250;</button>
         </div>
-        <div class="modal-body" id="mBody"></div>
-        <div class="modal-ftr" id="mFtr"></div>
+        <div class="cal-label" id="calLabel"></div>
       </div>
-    </div>
-
-    <!-- Confirm Dialog -->
-    <div class="confirm-ov" id="confirmOv">
-      <div class="confirm-box">
-        <div class="confirm-icon">&#9888;&#65039;</div>
-        <div class="confirm-title">Cancel Session?</div>
-        <div class="confirm-msg" id="confirmMsg">
-          This action cannot be undone.
-        </div>
-        <div class="confirm-actions">
-          <button class="m-btn btn-ghost" id="confirmNo">Keep It</button>
-          <button class="m-btn btn-danger" id="confirmYes">Yes, Cancel</button>
+      <div class="day-header-row" id="dayHeaderRow">
+        <div class="day-header-gutter"></div>
+      </div>
+      <div class="cal-scroll" id="calScroll">
+        <div class="cal-grid" id="calGrid">
+          <div class="time-gutter" id="timeGutter"></div>
+          <div class="day-cols" id="dayCols"></div>
         </div>
       </div>
     </div>
 
-    <script>
-      // ════════════════════════════════════════════════════════
-      // PLACEHOLDER: Replace with real auth context from Next.js API
-      // ════════════════════════════════════════════════════════
-      var USER = { id: "usr_brad", name: "Brad Winters", firstName: "Brad" };
+  </div>
 
-      // ════════════════════════════════════════════════════════
-      // PLACEHOLDER: Replace with GET /api/facilities
-      // ════════════════════════════════════════════════════════
-      var FACILITIES = [
-        {
-          id: "fac_34mse",
-          name: "34 Music Square East",
-          studios: [
-            { id: "std_col_a", name: "Columbia Studio A" },
-            { id: "std_quon", name: "Quonset Hut" },
-          ],
-        },
-        {
-          id: "fac_rem",
-          name: "REM Studios",
-          studios: [
-            { id: "std_rem_a", name: "REM A" },
-            { id: "std_rem_b", name: "REM B" },
-            { id: "std_rem_c", name: "REM C" },
-            { id: "std_rem_d", name: "REM D" },
-          ],
-        },
-        {
-          id: "fac_ow",
-          name: "Oceanway",
-          studios: [
-            { id: "std_ow_b", name: "Oceanway B" },
-            { id: "std_ow_d", name: "Oceanway D" },
-          ],
-        },
-        { id: "fac_jc", name: "Johnson Center", studios: [] },
-        { id: "fac_spl", name: "SPL", studios: [] },
-      ];
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <nav class="footer-nav">
+      <a href="https://bradwintersmusic-cloud.github.io/studio-home/">Studio Hub</a>
+      <span>|</span>
+      <a href="https://bradwintersmusic-cloud.github.io/studio-news/">AET News</a>
+      <span>|</span>
+      <a href="https://bradwintersmusic-cloud.github.io/studioassistant-sync/">Studio Schedule</a>
+      <span>|</span>
+      <a href="https://bradwintersmusic-cloud.github.io/studio-videos/">Video Library</a>
+      <span>|</span>
+      <a href="https://bradwintersmusic-cloud.github.io/studio-policies/">Policies</a>
+      <span>|</span>
+      <a href="https://bradwintersmusic-cloud.github.io/studio-tools/">Studio Tools</a>
+      <span>|</span>
+      <a href="https://bradwintersmusic-cloud.github.io/studio-musicians/">Session Musicians</a>
+      <span>|</span>
+      <a href="https://bradwintersmusic-cloud.github.io/studio-resources/">Resources</a>
+      <span>|</span>
+      <a href="https://bradwintersmusic-cloud.github.io/studio-contact/">Contact</a>
+    </nav>
+    <div class="footer-meta">Belmont University &middot; Audio Engineering Technology &middot; CEMB</div>
+    <div class="footer-meta"><a href="mailto:brad.winters@belmont.edu">brad.winters@belmont.edu</a></div>
+  </footer>
 
-      // ════════════════════════════════════════════════════════
-      // STATE
-      // ════════════════════════════════════════════════════════
-      var state = {
-        facId: FACILITIES[0].id,
-        studioId: FACILITIES[0].studios[0].id,
-        view: "week",
-        date: new Date(),
-        events: [],
-        filters: {
-          available: true,
-          requested: true,
-          booked: true,
-          maintenance: true,
-          event: true,
-          perk: true,
-        },
-        isDragging: false,
-        dragStartY: 0,
-        dragEl: null,
-        dragDay: null,
-        pendingCancelId: null,
-      };
+</div>
 
-      // ════════════════════════════════════════════════════════
-      // DEMO DATA — PLACEHOLDER: GET /api/bookings?resourceId=:id&start=:date&end=:date
-      // ════════════════════════════════════════════════════════
-      function makeDate(dayOff, h, m) {
-        var d = new Date();
-        d.setDate(d.getDate() + dayOff);
-        d.setHours(h, m || 0, 0, 0);
-        return d;
-      }
+<!-- Booking Modal -->
+<div class="overlay" id="modalOv">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div>
+        <div class="modal-title" id="mTitle">New Session</div>
+        <div class="modal-sub" id="mSub"></div>
+      </div>
+      <button class="modal-x" id="mClose">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+    <div class="modal-ftr" id="mFtr"></div>
+  </div>
+</div>
 
-      function loadDemoEvents(studioId) {
-        return [
-          {
-            id: "e1",
-            title: "Brad Winters \u2014 Academic",
-            start: makeDate(0, 10, 0),
-            end: makeDate(0, 12, 0),
-            status: "booked",
-            type: "own",
-            sessionType: "Academic",
-            attendees: "Brad Winters",
-            notes: "Advanced Mixing project \u2014 vocal comp session",
-            equipment: "",
-          },
-          {
-            id: "e2",
-            title: "Brad Winters \u2014 Practice",
-            start: makeDate(2, 14, 0),
-            end: makeDate(2, 16, 0),
-            status: "requested",
-            type: "own",
-            sessionType: "Practice",
-            attendees: "Brad Winters, Sarah Kim",
-            notes: "Band rehearsal",
-            equipment: "",
-          },
-          {
-            id: "e3",
-            title: "Brad Winters \u2014 Perk",
-            start: makeDate(4, 9, 0),
-            end: makeDate(4, 11, 0),
-            status: "perk",
-            type: "own",
-            sessionType: "Perk",
-            attendees: "Brad Winters",
-            notes: "",
-            equipment: "Neumann U87",
-          },
-          {
-            id: "e4",
-            title: "Session \u2014 Booked",
-            start: makeDate(0, 13, 0),
-            end: makeDate(0, 15, 0),
-            status: "booked",
-            type: "other",
-          },
-          {
-            id: "e5",
-            title: "Session \u2014 Booked",
-            start: makeDate(1, 9, 0),
-            end: makeDate(1, 11, 30),
-            status: "booked",
-            type: "other",
-          },
-          {
-            id: "e6",
-            title: "Available \u2014 AET 3220",
-            start: makeDate(1, 13, 0),
-            end: makeDate(1, 15, 0),
-            status: "available",
-            type: "claimable",
-            instructor: "Dr. Patricia Moore",
-            course: "AET 3220 \u2014 Advanced Mixing",
-            assignment: "Mix Project 2",
-          },
-          {
-            id: "e7",
-            title: "Available \u2014 AET 2300",
-            start: makeDate(3, 10, 0),
-            end: makeDate(3, 12, 0),
-            status: "available",
-            type: "claimable",
-            instructor: "Prof. James Ellis",
-            course: "AET 2300 \u2014 Audio I",
-            assignment: null,
-          },
-          {
-            id: "e8",
-            title: "Available \u2014 AET 4230",
-            start: makeDate(5, 14, 0),
-            end: makeDate(5, 17, 0),
-            status: "available",
-            type: "claimable",
-            instructor: "Prof. James Ellis",
-            course: "AET 4230 \u2014 Live Sound",
-            assignment: "Live Recording Project",
-          },
-          {
-            id: "e9",
-            title: "Maintenance",
-            start: makeDate(-1, 8, 0),
-            end: makeDate(-1, 17, 0),
-            status: "maintenance",
-            type: "system",
-            notes: "Console calibration",
-          },
-          {
-            id: "e10",
-            title: "Class \u2014 AET 3220",
-            start: makeDate(0, 8, 0),
-            end: makeDate(0, 9, 30),
-            status: "event",
-            type: "system",
-          },
-        ];
-      }
+<!-- Confirm Dialog -->
+<div class="confirm-ov" id="confirmOv">
+  <div class="confirm-box">
+    <div class="confirm-icon">&#9888;&#65039;</div>
+    <div class="confirm-title">Cancel Session?</div>
+    <div class="confirm-msg" id="confirmMsg">This action cannot be undone.</div>
+    <div class="confirm-actions">
+      <button class="m-btn btn-ghost" id="confirmNo">Keep It</button>
+      <button class="m-btn btn-danger" id="confirmYes">Yes, Cancel</button>
+    </div>
+  </div>
+</div>
 
-      // ════════════════════════════════════════════════════════
-      // UTILITY FUNCTIONS
-      // ════════════════════════════════════════════════════════
-      function fmtDate(d) {
-        return d.toLocaleDateString("en-US", {
-          weekday: "short",
-          month: "short",
-          day: "numeric",
-        });
-      }
-      function fmtTime(d) {
-        return d.toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-        });
-      }
-      function pad(n) {
-        return String(n).padStart(2, "0");
-      }
-      function toTimeInput(d) {
-        return pad(d.getHours()) + ":" + pad(d.getMinutes());
-      }
-      function toDateInput(d) {
-        return (
-          d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate())
-        );
-      }
-      function minsFromMidnight(d) {
-        return d.getHours() * 60 + d.getMinutes();
-      }
+<script>
+// ════════════════════════════════════════════════════════
+// PLACEHOLDER: Replace with real auth context from Next.js API
+// ════════════════════════════════════════════════════════
+var USER = { id: 'usr_brad', name: 'Brad Winters', firstName: 'Brad' };
 
-      function isSameDay(a, b) {
-        return (
-          a.getFullYear() === b.getFullYear() &&
-          a.getMonth() === b.getMonth() &&
-          a.getDate() === b.getDate()
-        );
-      }
+// ════════════════════════════════════════════════════════
+// PLACEHOLDER: Replace with GET /api/facilities
+// ════════════════════════════════════════════════════════
+var FACILITIES = [
+  {
+    id: 'fac_34mse', name: '34 Music Square East',
+    studios: [
+      { id: 'std_col_a', name: 'Columbia Studio A' },
+      { id: 'std_quon', name: 'Quonset Hut' }
+    ]
+  },
+  {
+    id: 'fac_rem', name: 'REM Studios',
+    studios: [
+      { id: 'std_rem_a', name: 'REM A' },
+      { id: 'std_rem_b', name: 'REM B' },
+      { id: 'std_rem_c', name: 'REM C' },
+      { id: 'std_rem_d', name: 'REM D' }
+    ]
+  },
+  {
+    id: 'fac_ow', name: 'Oceanway',
+    studios: [
+      { id: 'std_ow_b', name: 'Oceanway B' },
+      { id: 'std_ow_d', name: 'Oceanway D' }
+    ]
+  },
+  { id: 'fac_jc', name: 'Johnson Center', studios: [] },
+  { id: 'fac_spl', name: 'SPL', studios: [] }
+];
 
-      function getViewDays() {
-        var d = new Date(state.date);
-        d.setHours(0, 0, 0, 0);
-        if (state.view === "day") return [d];
-        if (state.view === "3day") {
-          return [0, 1, 2].map(function (i) {
-            var x = new Date(d);
-            x.setDate(x.getDate() + i);
-            return x;
-          });
-        }
-        if (state.view === "week") {
-          var dow = d.getDay();
-          var sun = new Date(d);
-          sun.setDate(d.getDate() - dow);
-          return [0, 1, 2, 3, 4, 5, 6].map(function (i) {
-            var x = new Date(sun);
-            x.setDate(sun.getDate() + i);
-            return x;
-          });
-        }
-        // month
-        var first = new Date(d.getFullYear(), d.getMonth(), 1);
-        var last = new Date(d.getFullYear(), d.getMonth() + 1, 0);
-        var start = new Date(first);
-        start.setDate(start.getDate() - start.getDay());
-        var end = new Date(last);
-        end.setDate(end.getDate() + (6 - end.getDay()));
-        var days = [];
-        var cur = new Date(start);
-        while (cur <= end) {
-          days.push(new Date(cur));
-          cur.setDate(cur.getDate() + 1);
-        }
-        return days;
-      }
+// ════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════
+var state = {
+  facId: FACILITIES[0].id,
+  studioId: FACILITIES[0].studios[0].id,
+  view: 'week',
+  date: new Date(),
+  events: [],
+  filters: { available: true, requested: true, booked: true, maintenance: true, event: true, perk: true },
+  isDragging: false,
+  dragStartY: 0,
+  dragEl: null,
+  dragDay: null,
+  pendingCancelId: null
+};
 
-      function navigate(dir) {
-        var d = new Date(state.date);
-        if (state.view === "day") d.setDate(d.getDate() + dir);
-        else if (state.view === "3day") d.setDate(d.getDate() + 3 * dir);
-        else if (state.view === "week") d.setDate(d.getDate() + 7 * dir);
-        else d.setMonth(d.getMonth() + dir);
-        state.date = d;
-        renderCalendar();
-      }
+// ════════════════════════════════════════════════════════
+// DEMO DATA — PLACEHOLDER: GET /api/bookings?resourceId=:id&start=:date&end=:date
+// ════════════════════════════════════════════════════════
+function makeDate(dayOff, h, m) {
+  var d = new Date();
+  d.setDate(d.getDate() + dayOff);
+  d.setHours(h, m || 0, 0, 0);
+  return d;
+}
 
-      function getCalLabel() {
-        var d = state.date;
-        if (state.view === "day")
-          return d.toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          });
-        if (state.view === "month")
-          return d.toLocaleDateString("en-US", {
-            month: "long",
-            year: "numeric",
-          });
-        var days = getViewDays();
-        var first = days[0];
-        var last = days[days.length - 1];
-        return (
-          first.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-          }) +
-          " \u2013 " +
-          last.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })
-        );
-      }
+function loadDemoEvents(studioId) {
+  return [
+    { id: 'e1', title: 'Brad Winters \u2014 Academic', start: makeDate(0, 10, 0), end: makeDate(0, 12, 0), status: 'booked', type: 'own', sessionType: 'Academic', attendees: 'Brad Winters', notes: 'Advanced Mixing project \u2014 vocal comp session', equipment: '' },
+    { id: 'e2', title: 'Brad Winters \u2014 Practice', start: makeDate(2, 14, 0), end: makeDate(2, 16, 0), status: 'requested', type: 'own', sessionType: 'Practice', attendees: 'Brad Winters, Sarah Kim', notes: 'Band rehearsal', equipment: '' },
+    { id: 'e3', title: 'Brad Winters \u2014 Perk', start: makeDate(4, 9, 0), end: makeDate(4, 11, 0), status: 'perk', type: 'own', sessionType: 'Perk', attendees: 'Brad Winters', notes: '', equipment: 'Neumann U87' },
+    { id: 'e4', title: 'Session \u2014 Booked', start: makeDate(0, 13, 0), end: makeDate(0, 15, 0), status: 'booked', type: 'other' },
+    { id: 'e5', title: 'Session \u2014 Booked', start: makeDate(1, 9, 0), end: makeDate(1, 11, 30), status: 'booked', type: 'other' },
+    { id: 'e6', title: 'Available \u2014 AET 3220', start: makeDate(1, 13, 0), end: makeDate(1, 15, 0), status: 'available', type: 'claimable', instructor: 'Dr. Patricia Moore', course: 'AET 3220 \u2014 Advanced Mixing', assignment: 'Mix Project 2' },
+    { id: 'e7', title: 'Available \u2014 AET 2300', start: makeDate(3, 10, 0), end: makeDate(3, 12, 0), status: 'available', type: 'claimable', instructor: 'Prof. James Ellis', course: 'AET 2300 \u2014 Audio I', assignment: null },
+    { id: 'e8', title: 'Available \u2014 AET 4230', start: makeDate(5, 14, 0), end: makeDate(5, 17, 0), status: 'available', type: 'claimable', instructor: 'Prof. James Ellis', course: 'AET 4230 \u2014 Live Sound', assignment: 'Live Recording Project' },
+    { id: 'e9', title: 'Maintenance', start: makeDate(-1, 8, 0), end: makeDate(-1, 17, 0), status: 'maintenance', type: 'system', notes: 'Console calibration' },
+    { id: 'e10', title: 'Class \u2014 AET 3220', start: makeDate(0, 8, 0), end: makeDate(0, 9, 30), status: 'event', type: 'system' }
+  ];
+}
 
-      function getCurrentStudioName() {
-        var fac = FACILITIES.find(function (f) {
-          return f.id === state.facId;
-        });
-        if (!fac) return "";
-        var s = fac.studios.find(function (st) {
-          return st.id === state.studioId;
-        });
-        return s ? s.name : "";
-      }
+// ════════════════════════════════════════════════════════
+// UTILITY FUNCTIONS
+// ════════════════════════════════════════════════════════
+function fmtDate(d) { return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }); }
+function fmtTime(d) { return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }); }
+function pad(n) { return String(n).padStart(2, '0'); }
+function toTimeInput(d) { return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+function toDateInput(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+function minsFromMidnight(d) { return d.getHours() * 60 + d.getMinutes(); }
 
-      function evStatusClass(ev) {
-        if (ev.status === "perk") return "ev-perk";
-        if (ev.status === "available") return "ev-available";
-        if (ev.status === "requested") return "ev-requested";
-        if (ev.status === "booked") return "ev-booked";
-        if (ev.status === "maintenance") return "ev-maintenance";
-        if (ev.status === "event") return "ev-event";
-        return "ev-booked";
-      }
+function isSameDay(a, b) {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
 
-      function borderClass(ev) {
-        if (ev.status === "perk") return "b-perk";
-        if (ev.status === "requested") return "b-requested";
-        if (ev.status === "booked") return "b-booked";
-        if (ev.status === "event") return "b-event";
-        return "b-available";
-      }
+function getViewDays() {
+  var d = new Date(state.date);
+  d.setHours(0, 0, 0, 0);
+  if (state.view === 'day') return [d];
+  if (state.view === '3day') {
+    return [0, 1, 2].map(function (i) { var x = new Date(d); x.setDate(x.getDate() + i); return x; });
+  }
+  if (state.view === 'week') {
+    var dow = d.getDay();
+    var sun = new Date(d);
+    sun.setDate(d.getDate() - dow);
+    return [0, 1, 2, 3, 4, 5, 6].map(function (i) { var x = new Date(sun); x.setDate(sun.getDate() + i); return x; });
+  }
+  // month
+  var first = new Date(d.getFullYear(), d.getMonth(), 1);
+  var last = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+  var start = new Date(first);
+  start.setDate(start.getDate() - start.getDay());
+  var end = new Date(last);
+  end.setDate(end.getDate() + (6 - end.getDay()));
+  var days = [];
+  var cur = new Date(start);
+  while (cur <= end) { days.push(new Date(cur)); cur.setDate(cur.getDate() + 1); }
+  return days;
+}
 
-      function showConflict() {
-        var f = document.getElementById("conflictFlash");
-        f.style.display = "block";
-        setTimeout(function () {
-          f.style.display = "none";
-        }, 2500);
-      }
+function navigate(dir) {
+  var d = new Date(state.date);
+  if (state.view === 'day') d.setDate(d.getDate() + dir);
+  else if (state.view === '3day') d.setDate(d.getDate() + 3 * dir);
+  else if (state.view === 'week') d.setDate(d.getDate() + 7 * dir);
+  else d.setMonth(d.getMonth() + dir);
+  state.date = d;
+  renderCalendar();
+}
 
-      // ════════════════════════════════════════════════════════
-      // MODAL
-      // ════════════════════════════════════════════════════════
-      var modalOv = document.getElementById("modalOv");
-      var mTitle = document.getElementById("mTitle");
-      var mSub = document.getElementById("mSub");
-      var mBody = document.getElementById("mBody");
-      var mFtr = document.getElementById("mFtr");
-      var confirmOv = document.getElementById("confirmOv");
-      var confirmMsg = document.getElementById("confirmMsg");
+function getCalLabel() {
+  var d = state.date;
+  if (state.view === 'day') return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  if (state.view === 'month') return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  var days = getViewDays();
+  var first = days[0];
+  var last = days[days.length - 1];
+  return first.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' \u2013 ' + last.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
 
-      function openModal() {
-        modalOv.classList.add("open");
-      }
-      function closeModal() {
-        modalOv.classList.remove("open");
-      }
+function getCurrentStudioName() {
+  var fac = FACILITIES.find(function (f) { return f.id === state.facId; });
+  if (!fac) return '';
+  var s = fac.studios.find(function (st) { return st.id === state.studioId; });
+  return s ? s.name : '';
+}
 
-      document.getElementById("mClose").addEventListener("click", closeModal);
-      modalOv.addEventListener("click", function (e) {
-        if (e.target === modalOv) closeModal();
+function evStatusClass(ev) {
+  if (ev.status === 'perk') return 'ev-perk';
+  if (ev.status === 'available') return 'ev-available';
+  if (ev.status === 'requested') return 'ev-requested';
+  if (ev.status === 'booked') return 'ev-booked';
+  if (ev.status === 'maintenance') return 'ev-maintenance';
+  if (ev.status === 'event') return 'ev-event';
+  return 'ev-booked';
+}
+
+function borderClass(ev) {
+  if (ev.status === 'perk') return 'b-perk';
+  if (ev.status === 'requested') return 'b-requested';
+  if (ev.status === 'booked') return 'b-booked';
+  if (ev.status === 'event') return 'b-event';
+  return 'b-available';
+}
+
+function showConflict() {
+  var f = document.getElementById('conflictFlash');
+  f.style.display = 'block';
+  setTimeout(function () { f.style.display = 'none'; }, 2500);
+}
+
+// ════════════════════════════════════════════════════════
+// MODAL
+// ════════════════════════════════════════════════════════
+var modalOv = document.getElementById('modalOv');
+var mTitle = document.getElementById('mTitle');
+var mSub = document.getElementById('mSub');
+var mBody = document.getElementById('mBody');
+var mFtr = document.getElementById('mFtr');
+var confirmOv = document.getElementById('confirmOv');
+var confirmMsg = document.getElementById('confirmMsg');
+
+function openModal() { modalOv.classList.add('open'); }
+function closeModal() { modalOv.classList.remove('open'); }
+
+document.getElementById('mClose').addEventListener('click', closeModal);
+modalOv.addEventListener('click', function (e) { if (e.target === modalOv) closeModal(); });
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') { closeModal(); confirmOv.classList.remove('open'); }
+});
+
+document.getElementById('confirmNo').addEventListener('click', function () {
+  confirmOv.classList.remove('open');
+  state.pendingCancelId = null;
+});
+
+document.getElementById('confirmYes').addEventListener('click', function () {
+  if (state.pendingCancelId) {
+    // PLACEHOLDER: DELETE /api/bookings/:state.pendingCancelId
+    state.events = state.events.filter(function (ev) { return ev.id !== state.pendingCancelId; });
+    state.pendingCancelId = null;
+  }
+  confirmOv.classList.remove('open');
+  closeModal();
+  renderCalendar();
+  renderUpcoming();
+});
+
+function openNewBookingModal(start, end) {
+  mTitle.textContent = 'New Session';
+  mSub.textContent = fmtDate(start) + ' \u00b7 ' + fmtTime(start) + ' \u2013 ' + fmtTime(end);
+  mBody.innerHTML =
+    '<div class="m-placeholder">\u26a1 PLACEHOLDER \u2014 Will POST to /api/bookings with authenticated user context</div>' +
+    '<div class="m-field"><label class="m-label">Session Type</label><select class="m-sel" id="mType"><option>Academic</option><option>Practice</option><option>Perk</option></select></div>' +
+    '<div class="m-time-row"><div class="m-field"><label class="m-label">Date</label><input type="date" class="m-input" id="mDate" value="' + toDateInput(start) + '"></div><div></div></div>' +
+    '<div class="m-time-row"><div class="m-field"><label class="m-label">Start</label><input type="time" class="m-input" id="mStart" value="' + toTimeInput(start) + '" step="1800"></div><div class="m-field"><label class="m-label">End</label><input type="time" class="m-input" id="mEnd" value="' + toTimeInput(end) + '" step="1800"></div></div>' +
+    '<div class="m-field"><label class="m-label">Attendees <span style="color:var(--muted);font-size:9px;">(will be user lookup)</span></label><input type="text" class="m-input" id="mAttendees" value="' + USER.name + '" placeholder="Names..."></div>' +
+    '<div class="m-field"><label class="m-label">Notes</label><textarea class="m-textarea" id="mNotes" placeholder="Session details, goals..."></textarea></div>' +
+    '<div class="m-field"><label class="m-label">Equipment Requests <span style="color:var(--orange);font-size:9px;">\u2014 connects to equipment table</span></label><input type="text" class="m-input" id="mEquip" placeholder="Neumann U87, Apollo Twin..."></div>';
+  mFtr.innerHTML =
+    '<button class="m-btn btn-primary" id="mSubmit">Request Session</button>' +
+    '<button class="m-btn btn-ghost" id="mCancelModal">Cancel</button>';
+
+  document.getElementById('mSubmit').addEventListener('click', function () {
+    var dateVal = document.getElementById('mDate').value;
+    var s = new Date(dateVal + 'T' + document.getElementById('mStart').value);
+    var en = new Date(dateVal + 'T' + document.getElementById('mEnd').value);
+    var type = document.getElementById('mType').value;
+    var ev = {
+      id: 'ev_' + Date.now(),
+      title: USER.name + ' \u2014 ' + type,
+      start: s,
+      end: en,
+      status: 'requested',
+      type: 'own',
+      sessionType: type,
+      attendees: document.getElementById('mAttendees').value,
+      notes: document.getElementById('mNotes').value,
+      equipment: document.getElementById('mEquip').value
+      // PLACEHOLDER: After API call, update status based on approval_policy result
+    };
+    state.events.push(ev);
+    closeModal();
+    renderCalendar();
+    renderUpcoming();
+  });
+
+  document.getElementById('mCancelModal').addEventListener('click', closeModal);
+  openModal();
+}
+
+function openClaimableModal(ev) {
+  mTitle.textContent = 'Claimable Session';
+  mSub.textContent = fmtDate(ev.start) + ' \u00b7 ' + fmtTime(ev.start) + ' \u2013 ' + fmtTime(ev.end);
+  mBody.innerHTML =
+    '<div class="m-placeholder">\u26a1 PLACEHOLDER \u2014 Will POST to /api/bookings/claim/:slotId with user auth</div>' +
+    '<div class="m-field"><label class="m-label">Instructor</label><div class="m-value">' + (ev.instructor || '\u2014') + '</div></div>' +
+    '<div class="m-field"><label class="m-label">Course</label><div class="m-value">' + (ev.course || '\u2014') + '</div></div>' +
+    (ev.assignment ? '<div class="m-field"><label class="m-label">Assignment</label><div class="m-value">' + ev.assignment + '</div></div>' : '') +
+    '<div class="m-field"><label class="m-label">Date</label><div class="m-value">' + fmtDate(ev.start) + '</div></div>' +
+    '<div class="m-field"><label class="m-label">Time</label><div class="m-value">' + fmtTime(ev.start) + ' \u2013 ' + fmtTime(ev.end) + '</div></div>' +
+    '<div class="m-divider"></div>' +
+    '<div class="m-field"><label class="m-label">Notes</label><textarea class="m-textarea" id="mClaimNotes" placeholder="Any notes for this session..."></textarea></div>';
+  mFtr.innerHTML =
+    '<button class="m-btn btn-primary" id="mClaim">Claim This Slot</button>' +
+    '<button class="m-btn btn-ghost" id="mClaimX">Close</button>';
+
+  document.getElementById('mClaim').addEventListener('click', function () {
+    // PLACEHOLDER: POST /api/bookings/claim/:slotId
+    state.events = state.events.map(function (e) {
+      if (e.id === ev.id) return Object.assign({}, e, { title: USER.name + ' \u2014 ' + (ev.course || 'Claimed'), status: 'requested', type: 'own' });
+      return e;
+    });
+    closeModal();
+    renderCalendar();
+    renderUpcoming();
+  });
+
+  document.getElementById('mClaimX').addEventListener('click', closeModal);
+  openModal();
+}
+
+function openDetailModal(ev) {
+  var isOwn = ev.type === 'own';
+  mTitle.textContent = ev.sessionType || 'Session Details';
+  mSub.textContent = fmtDate(ev.start) + ' \u00b7 ' + fmtTime(ev.start) + ' \u2013 ' + fmtTime(ev.end);
+  var html = '';
+  html += '<div class="m-field"><label class="m-label">Status</label><div class="m-value"><span class="chip chip-' + (ev.status === 'perk' ? 'perk' : ev.status) + ' on" style="cursor:default;">' + (ev.status === 'perk' ? 'Perk' : ev.status.charAt(0).toUpperCase() + ev.status.slice(1)) + '</span></div></div>';
+  if (ev.sessionType) html += '<div class="m-field"><label class="m-label">Session Type</label><div class="m-value">' + ev.sessionType + '</div></div>';
+  html += '<div class="m-field"><label class="m-label">Date</label><div class="m-value">' + fmtDate(ev.start) + '</div></div>';
+  html += '<div class="m-field"><label class="m-label">Time</label><div class="m-value">' + fmtTime(ev.start) + ' \u2013 ' + fmtTime(ev.end) + '</div></div>';
+  if (ev.attendees) html += '<div class="m-field"><label class="m-label">Attendees</label><div class="m-value">' + ev.attendees + '</div></div>';
+  if (ev.notes) html += '<div class="m-field"><label class="m-label">Notes</label><div class="m-value muted">' + ev.notes + '</div></div>';
+  if (ev.equipment) html += '<div class="m-field"><label class="m-label">Equipment</label><div class="m-value muted">' + ev.equipment + '</div></div>';
+  if (isOwn) html += '<div class="m-placeholder">\u26a1 PLACEHOLDER \u2014 Cancel calls DELETE /api/bookings/:id (enforces min_cancellation_notice_hours policy)</div>';
+  mBody.innerHTML = html;
+  mFtr.innerHTML = (isOwn ? '<button class="m-btn btn-danger" id="mCancelEv">Cancel Booking</button>' : '') + '<button class="m-btn btn-ghost" id="mDetailX">Close</button>';
+
+  if (isOwn) {
+    document.getElementById('mCancelEv').addEventListener('click', function () {
+      state.pendingCancelId = ev.id;
+      confirmMsg.innerHTML = 'Cancel your ' + (ev.sessionType || 'session') + ' on ' + fmtDate(ev.start) + '? This action cannot be undone.';
+      confirmOv.classList.add('open');
+    });
+  }
+
+  document.getElementById('mDetailX').addEventListener('click', closeModal);
+  openModal();
+}
+
+// ════════════════════════════════════════════════════════
+// CALENDAR RENDER
+// ════════════════════════════════════════════════════════
+var GRID_H = 1600;
+var MIN_PX = GRID_H / 1440;
+
+function timeToPx(d) { return minsFromMidnight(d) * MIN_PX; }
+function durationPx(s, e) { return (minsFromMidnight(e) - minsFromMidnight(s)) * MIN_PX; }
+
+function renderCalendar() {
+  var days = getViewDays();
+  var sName = getCurrentStudioName();
+  document.getElementById('calLabel').textContent = (sName ? sName + ' \u2014 ' : '') + getCalLabel();
+
+  // Day headers
+  var hRow = document.getElementById('dayHeaderRow');
+  hRow.innerHTML = '<div class="day-header-gutter"></div>';
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  days.forEach(function (d) {
+    var dh = document.createElement('div');
+    dh.className = 'day-header' + (isSameDay(d, today) ? ' is-today' : '');
+    dh.textContent = d.toLocaleDateString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric' });
+    hRow.appendChild(dh);
+  });
+
+  // Time gutter
+  var tg = document.getElementById('timeGutter');
+  tg.innerHTML = '';
+  tg.style.height = GRID_H + 'px';
+  for (var h = 0; h <= 23; h++) {
+    var lbl = document.createElement('div');
+    lbl.className = 'time-label';
+    lbl.style.top = (h * GRID_H / 24) + 'px';
+    var hr = h === 0 ? 12 : h > 12 ? h - 12 : h;
+    lbl.textContent = hr + (h < 12 ? 'a' : 'p');
+    tg.appendChild(lbl);
+  }
+
+  // Day columns
+  var cols = document.getElementById('dayCols');
+  cols.innerHTML = '';
+  cols.style.height = GRID_H + 'px';
+
+  days.forEach(function (day) {
+    var col = document.createElement('div');
+    col.className = 'day-col';
+
+    // Hour lines
+    for (var h = 0; h <= 23; h++) {
+      var line = document.createElement('div');
+      line.className = 'hour-line';
+      line.style.top = (h * GRID_H / 24) + 'px';
+      col.appendChild(line);
+      if (h < 23) {
+        var half = document.createElement('div');
+        half.className = 'half-line';
+        half.style.top = ((h + 0.5) * GRID_H / 24) + 'px';
+        col.appendChild(half);
+      }
+    }
+
+    // Now line
+    if (isSameDay(day, new Date())) {
+      var nowLine = document.createElement('div');
+      nowLine.className = 'now-line';
+      nowLine.style.top = timeToPx(new Date()) + 'px';
+      var nowDot = document.createElement('div');
+      nowDot.className = 'now-dot';
+      nowLine.appendChild(nowDot);
+      col.appendChild(nowLine);
+    }
+
+    // Events
+    var dayEvents = state.events.filter(function (ev) {
+      var filterKey = ev.status === 'perk' ? 'perk' : ev.status;
+      return isSameDay(ev.start, day) && state.filters[filterKey];
+    });
+
+    dayEvents.forEach(function (ev) {
+      var top = timeToPx(ev.start);
+      var height = Math.max(durationPx(ev.start, ev.end), 22);
+      var el = document.createElement('div');
+      el.className = 'cal-event ' + evStatusClass(ev);
+      el.style.top = top + 'px';
+      el.style.height = height + 'px';
+      el.innerHTML = '<div class="cal-event-title">' + ev.title + '</div><div class="cal-event-time">' + fmtTime(ev.start) + ' \u2013 ' + fmtTime(ev.end) + '</div>';
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (ev.type === 'claimable') openClaimableModal(ev);
+        else openDetailModal(ev);
+      });
+      col.appendChild(el);
+    });
+
+    // Drag to create
+    var dragSel = null;
+    var dragStartY = 0;
+    var dragging = false;
+
+    col.addEventListener('mousedown', function (e) {
+      if (e.target.classList.contains('cal-event')) return;
+      dragStartY = e.offsetY;
+      dragging = true;
+      dragSel = document.createElement('div');
+      dragSel.className = 'drag-sel';
+      dragSel.style.top = dragStartY + 'px';
+      dragSel.style.height = '2px';
+      col.appendChild(dragSel);
+    });
+
+    col.addEventListener('mousemove', function (e) {
+      if (!dragging || !dragSel) return;
+      var top = Math.min(dragStartY, e.offsetY);
+      var ht = Math.abs(e.offsetY - dragStartY);
+      dragSel.style.top = top + 'px';
+      dragSel.style.height = Math.max(ht, 2) + 'px';
+    });
+
+    col.addEventListener('mouseup', function (e) {
+      if (!dragging || !dragSel) return;
+      dragging = false;
+      var endY = e.offsetY;
+      var topY = Math.min(dragStartY, endY);
+      var botY = Math.max(dragStartY, endY);
+      if (dragSel.parentNode) dragSel.parentNode.removeChild(dragSel);
+      dragSel = null;
+
+      var startMins = Math.round((topY / GRID_H) * 1440 / 30) * 30;
+      var endMins = Math.max(startMins + 30, Math.round((botY / GRID_H) * 1440 / 30) * 30);
+
+      var start = new Date(day);
+      start.setHours(Math.floor(startMins / 60), startMins % 60, 0, 0);
+      var end = new Date(day);
+      end.setHours(Math.floor(endMins / 60), endMins % 60, 0, 0);
+
+      // Conflict check
+      var conflict = state.events.some(function (ev) {
+        return isSameDay(ev.start, day) && ev.type !== 'claimable' && ev.type !== 'system' && start < ev.end && end > ev.start;
       });
 
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-          closeModal();
-          confirmOv.classList.remove("open");
-        }
-      });
+      if (conflict) { showConflict(); return; }
+      openNewBookingModal(start, end);
+    });
 
-      document
-        .getElementById("confirmNo")
-        .addEventListener("click", function () {
-          confirmOv.classList.remove("open");
-          state.pendingCancelId = null;
-        });
-
-      document
-        .getElementById("confirmYes")
-        .addEventListener("click", function () {
-          if (state.pendingCancelId) {
-            // PLACEHOLDER: DELETE /api/bookings/:state.pendingCancelId
-            state.events = state.events.filter(function (ev) {
-              return ev.id !== state.pendingCancelId;
-            });
-            state.pendingCancelId = null;
-          }
-          confirmOv.classList.remove("open");
-          closeModal();
-          renderCalendar();
-          renderUpcoming();
-        });
-
-      function openNewBookingModal(start, end) {
-        mTitle.textContent = "New Session";
-        mSub.textContent =
-          fmtDate(start) +
-          " \u00b7 " +
-          fmtTime(start) +
-          " \u2013 " +
-          fmtTime(end);
-        mBody.innerHTML =
-          '<div class="m-placeholder">\u26a1 PLACEHOLDER \u2014 Will POST to /api/bookings with authenticated user context</div>' +
-          '<div class="m-field"><label class="m-label">Session Type</label><select class="m-sel" id="mType"><option>Academic</option><option>Practice</option><option>Perk</option></select></div>' +
-          '<div class="m-time-row"><div class="m-field"><label class="m-label">Date</label><input type="date" class="m-input" id="mDate" value="' +
-          toDateInput(start) +
-          '"></div><div></div></div>' +
-          '<div class="m-time-row"><div class="m-field"><label class="m-label">Start</label><input type="time" class="m-input" id="mStart" value="' +
-          toTimeInput(start) +
-          '" step="1800"></div><div class="m-field"><label class="m-label">End</label><input type="time" class="m-input" id="mEnd" value="' +
-          toTimeInput(end) +
-          '" step="1800"></div></div>' +
-          '<div class="m-field"><label class="m-label">Attendees <span style="color:var(--muted);font-size:9px;">(will be user lookup)</span></label><input type="text" class="m-input" id="mAttendees" value="' +
-          USER.name +
-          '" placeholder="Names..."></div>' +
-          '<div class="m-field"><label class="m-label">Notes</label><textarea class="m-textarea" id="mNotes" placeholder="Session details, goals..."></textarea></div>' +
-          '<div class="m-field"><label class="m-label">Equipment Requests <span style="color:var(--orange);font-size:9px;">\u2014 connects to equipment table</span></label><input type="text" class="m-input" id="mEquip" placeholder="Neumann U87, Apollo Twin..."></div>';
-        mFtr.innerHTML =
-          '<button class="m-btn btn-primary" id="mSubmit">Request Session</button>' +
-          '<button class="m-btn btn-ghost" id="mCancelModal">Cancel</button>';
-
-        document
-          .getElementById("mSubmit")
-          .addEventListener("click", function () {
-            var dateVal = document.getElementById("mDate").value;
-            var s = new Date(
-              dateVal + "T" + document.getElementById("mStart").value,
-            );
-            var en = new Date(
-              dateVal + "T" + document.getElementById("mEnd").value,
-            );
-            var type = document.getElementById("mType").value;
-            var ev = {
-              id: "ev_" + Date.now(),
-              title: USER.name + " \u2014 " + type,
-              start: s,
-              end: en,
-              status: "requested",
-              type: "own",
-              sessionType: type,
-              attendees: document.getElementById("mAttendees").value,
-              notes: document.getElementById("mNotes").value,
-              equipment: document.getElementById("mEquip").value,
-              // PLACEHOLDER: After API call, update status based on approval_policy result
-            };
-            state.events.push(ev);
-            closeModal();
-            renderCalendar();
-            renderUpcoming();
-          });
-
-        document
-          .getElementById("mCancelModal")
-          .addEventListener("click", closeModal);
-        openModal();
+    col.addEventListener('mouseleave', function () {
+      if (dragging && dragSel) {
+        if (dragSel.parentNode) dragSel.parentNode.removeChild(dragSel);
+        dragSel = null;
+        dragging = false;
       }
+    });
 
-      function openClaimableModal(ev) {
-        mTitle.textContent = "Claimable Session";
-        mSub.textContent =
-          fmtDate(ev.start) +
-          " \u00b7 " +
-          fmtTime(ev.start) +
-          " \u2013 " +
-          fmtTime(ev.end);
-        mBody.innerHTML =
-          '<div class="m-placeholder">\u26a1 PLACEHOLDER \u2014 Will POST to /api/bookings/claim/:slotId with user auth</div>' +
-          '<div class="m-field"><label class="m-label">Instructor</label><div class="m-value">' +
-          (ev.instructor || "\u2014") +
-          "</div></div>" +
-          '<div class="m-field"><label class="m-label">Course</label><div class="m-value">' +
-          (ev.course || "\u2014") +
-          "</div></div>" +
-          (ev.assignment
-            ? '<div class="m-field"><label class="m-label">Assignment</label><div class="m-value">' +
-              ev.assignment +
-              "</div></div>"
-            : "") +
-          '<div class="m-field"><label class="m-label">Date</label><div class="m-value">' +
-          fmtDate(ev.start) +
-          "</div></div>" +
-          '<div class="m-field"><label class="m-label">Time</label><div class="m-value">' +
-          fmtTime(ev.start) +
-          " \u2013 " +
-          fmtTime(ev.end) +
-          "</div></div>" +
-          '<div class="m-divider"></div>' +
-          '<div class="m-field"><label class="m-label">Notes</label><textarea class="m-textarea" id="mClaimNotes" placeholder="Any notes for this session..."></textarea></div>';
-        mFtr.innerHTML =
-          '<button class="m-btn btn-primary" id="mClaim">Claim This Slot</button>' +
-          '<button class="m-btn btn-ghost" id="mClaimX">Close</button>';
+    cols.appendChild(col);
+  });
 
-        document
-          .getElementById("mClaim")
-          .addEventListener("click", function () {
-            // PLACEHOLDER: POST /api/bookings/claim/:slotId
-            state.events = state.events.map(function (e) {
-              if (e.id === ev.id)
-                return Object.assign({}, e, {
-                  title: USER.name + " \u2014 " + (ev.course || "Claimed"),
-                  status: "requested",
-                  type: "own",
-                });
-              return e;
-            });
-            closeModal();
-            renderCalendar();
-            renderUpcoming();
-          });
+  // Scroll to 7am on first render
+  var scroll = document.getElementById('calScroll');
+  if (!scroll._scrolled) {
+    var sevenAm = new Date();
+    sevenAm.setHours(7, 0, 0, 0);
+    scroll.scrollTop = timeToPx(sevenAm);
+    scroll._scrolled = true;
+  }
+}
 
-        document
-          .getElementById("mClaimX")
-          .addEventListener("click", closeModal);
-        openModal();
-      }
+// ════════════════════════════════════════════════════════
+// UPCOMING SESSIONS
+// ════════════════════════════════════════════════════════
+function renderUpcoming() {
+  var now = new Date();
+  var upcoming = state.events
+    .filter(function (ev) { return ev.type === 'own' && ev.start >= now; })
+    .sort(function (a, b) { return a.start - b.start; })
+    .slice(0, 5);
+  var list = document.getElementById('upcomingList');
+  if (!upcoming.length) {
+    list.innerHTML = '<div class="upcoming-empty">No upcoming sessions</div>';
+    return;
+  }
+  list.innerHTML = upcoming.map(function (ev) {
+    var bc = borderClass(ev);
+    return '<div class="upcoming-item ' + bc + '" data-id="' + ev.id + '">' +
+      '<div class="upcoming-title">' + (ev.sessionType || 'Session') + '</div>' +
+      '<div class="upcoming-meta">' + fmtDate(ev.start) + '<br>' + fmtTime(ev.start) + ' \u2013 ' + fmtTime(ev.end) + '</div>' +
+      '</div>';
+  }).join('');
+  list.querySelectorAll('.upcoming-item').forEach(function (el) {
+    el.addEventListener('click', function () {
+      var id = el.dataset.id;
+      var ev = state.events.find(function (e) { return e.id === id; });
+      if (ev) openDetailModal(ev);
+    });
+  });
+}
 
-      function openDetailModal(ev) {
-        var isOwn = ev.type === "own";
-        mTitle.textContent = ev.sessionType || "Session Details";
-        mSub.textContent =
-          fmtDate(ev.start) +
-          " \u00b7 " +
-          fmtTime(ev.start) +
-          " \u2013 " +
-          fmtTime(ev.end);
-        var html = "";
-        html +=
-          '<div class="m-field"><label class="m-label">Status</label><div class="m-value"><span class="chip chip-' +
-          (ev.status === "perk" ? "perk" : ev.status) +
-          ' on" style="cursor:default;">' +
-          (ev.status === "perk"
-            ? "Perk"
-            : ev.status.charAt(0).toUpperCase() + ev.status.slice(1)) +
-          "</span></div></div>";
-        if (ev.sessionType)
-          html +=
-            '<div class="m-field"><label class="m-label">Session Type</label><div class="m-value">' +
-            ev.sessionType +
-            "</div></div>";
-        html +=
-          '<div class="m-field"><label class="m-label">Date</label><div class="m-value">' +
-          fmtDate(ev.start) +
-          "</div></div>";
-        html +=
-          '<div class="m-field"><label class="m-label">Time</label><div class="m-value">' +
-          fmtTime(ev.start) +
-          " \u2013 " +
-          fmtTime(ev.end) +
-          "</div></div>";
-        if (ev.attendees)
-          html +=
-            '<div class="m-field"><label class="m-label">Attendees</label><div class="m-value">' +
-            ev.attendees +
-            "</div></div>";
-        if (ev.notes)
-          html +=
-            '<div class="m-field"><label class="m-label">Notes</label><div class="m-value muted">' +
-            ev.notes +
-            "</div></div>";
-        if (ev.equipment)
-          html +=
-            '<div class="m-field"><label class="m-label">Equipment</label><div class="m-value muted">' +
-            ev.equipment +
-            "</div></div>";
-        if (isOwn)
-          html +=
-            '<div class="m-placeholder">\u26a1 PLACEHOLDER \u2014 Cancel calls DELETE /api/bookings/:id (enforces min_cancellation_notice_hours policy)</div>';
-        mBody.innerHTML = html;
-        mFtr.innerHTML =
-          (isOwn
-            ? '<button class="m-btn btn-danger" id="mCancelEv">Cancel Booking</button>'
-            : "") +
-          '<button class="m-btn btn-ghost" id="mDetailX">Close</button>';
+// ════════════════════════════════════════════════════════
+// FACILITY / STUDIO DROPDOWNS
+// ════════════════════════════════════════════════════════
+var facSel = document.getElementById('facSel');
+var studioSel = document.getElementById('studioSel');
 
-        if (isOwn) {
-          document
-            .getElementById("mCancelEv")
-            .addEventListener("click", function () {
-              state.pendingCancelId = ev.id;
-              confirmMsg.innerHTML =
-                "Cancel your " +
-                (ev.sessionType || "session") +
-                " on " +
-                fmtDate(ev.start) +
-                "? This action cannot be undone.";
-              confirmOv.classList.add("open");
-            });
-        }
+FACILITIES.forEach(function (f) {
+  var opt = document.createElement('option');
+  opt.value = f.id;
+  opt.textContent = f.name;
+  facSel.appendChild(opt);
+});
 
-        document
-          .getElementById("mDetailX")
-          .addEventListener("click", closeModal);
-        openModal();
-      }
+function updateStudioSel() {
+  var fac = FACILITIES.find(function (f) { return f.id === state.facId; });
+  studioSel.innerHTML = '';
+  if (!fac || !fac.studios.length) {
+    var opt = document.createElement('option');
+    opt.textContent = 'No rooms listed yet';
+    opt.disabled = true;
+    studioSel.appendChild(opt);
+    state.studioId = '';
+  } else {
+    fac.studios.forEach(function (s) {
+      var opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = s.name;
+      studioSel.appendChild(opt);
+    });
+    state.studioId = fac.studios[0].id;
+    // PLACEHOLDER: GET /api/bookings?resourceId=state.studioId
+    state.events = loadDemoEvents(state.studioId);
+  }
+}
 
-      // ════════════════════════════════════════════════════════
-      // CALENDAR RENDER
-      // ════════════════════════════════════════════════════════
-      var GRID_H = 1600;
-      var MIN_PX = GRID_H / 1440;
+facSel.addEventListener('change', function () {
+  state.facId = this.value;
+  updateStudioSel();
+  renderCalendar();
+  renderUpcoming();
+});
 
-      function timeToPx(d) {
-        return minsFromMidnight(d) * MIN_PX;
-      }
-      function durationPx(s, e) {
-        return (minsFromMidnight(e) - minsFromMidnight(s)) * MIN_PX;
-      }
+studioSel.addEventListener('change', function () {
+  state.studioId = this.value;
+  // PLACEHOLDER: GET /api/bookings?resourceId=state.studioId
+  state.events = loadDemoEvents(state.studioId);
+  renderCalendar();
+  renderUpcoming();
+});
 
-      function renderCalendar() {
-        var days = getViewDays();
-        var sName = getCurrentStudioName();
-        document.getElementById("calLabel").textContent =
-          (sName ? sName + " \u2014 " : "") + getCalLabel();
+// ════════════════════════════════════════════════════════
+// CONTROLS
+// ════════════════════════════════════════════════════════
+document.getElementById('viewBtns').addEventListener('click', function (e) {
+  var btn = e.target.closest('.view-btn');
+  if (!btn) return;
+  state.view = btn.dataset.v;
+  document.querySelectorAll('.view-btn').forEach(function (b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderCalendar();
+});
 
-        // Day headers
-        var hRow = document.getElementById("dayHeaderRow");
-        hRow.innerHTML = '<div class="day-header-gutter"></div>';
-        var today = new Date();
-        today.setHours(0, 0, 0, 0);
-        days.forEach(function (d) {
-          var dh = document.createElement("div");
-          dh.className =
-            "day-header" + (isSameDay(d, today) ? " is-today" : "");
-          dh.textContent = d.toLocaleDateString("en-US", {
-            weekday: "short",
-            month: "numeric",
-            day: "numeric",
-          });
-          hRow.appendChild(dh);
-        });
+document.getElementById('prevBtn').addEventListener('click', function () { navigate(-1); });
+document.getElementById('nextBtn').addEventListener('click', function () { navigate(1); });
+document.getElementById('todayBtn').addEventListener('click', function () { state.date = new Date(); renderCalendar(); });
 
-        // Time gutter
-        var tg = document.getElementById("timeGutter");
-        tg.innerHTML = "";
-        tg.style.height = GRID_H + "px";
-        for (var h = 0; h <= 23; h++) {
-          var lbl = document.createElement("div");
-          lbl.className = "time-label";
-          lbl.style.top = (h * GRID_H) / 24 + "px";
-          var hr = h === 0 ? 12 : h > 12 ? h - 12 : h;
-          lbl.textContent = hr + (h < 12 ? "a" : "p");
-          tg.appendChild(lbl);
-        }
+document.getElementById('jumpDate').addEventListener('change', function () {
+  if (this.value) { state.date = new Date(this.value + 'T12:00:00'); renderCalendar(); }
+});
 
-        // Day columns
-        var cols = document.getElementById("dayCols");
-        cols.innerHTML = "";
-        cols.style.height = GRID_H + "px";
+document.getElementById('filterChips').addEventListener('click', function (e) {
+  var chip = e.target.closest('.chip');
+  if (!chip) return;
+  var s = chip.dataset.s;
+  state.filters[s] = !state.filters[s];
+  chip.classList.toggle('on', state.filters[s]);
+  renderCalendar();
+});
 
-        days.forEach(function (day) {
-          var col = document.createElement("div");
-          col.className = "day-col";
+document.getElementById('bookBtn').addEventListener('click', function () {
+  var now = new Date();
+  var mins = now.getMinutes() < 30 ? 30 : 0;
+  var hrs = mins === 0 ? now.getHours() + 1 : now.getHours();
+  var start = new Date(now);
+  start.setHours(hrs, mins, 0, 0);
+  var end = new Date(start.getTime() + 60 * 60 * 1000);
+  openNewBookingModal(start, end);
+});
 
-          // Hour lines
-          for (var h = 0; h <= 23; h++) {
-            var line = document.createElement("div");
-            line.className = "hour-line";
-            line.style.top = (h * GRID_H) / 24 + "px";
-            col.appendChild(line);
-            if (h < 23) {
-              var half = document.createElement("div");
-              half.className = "half-line";
-              half.style.top = ((h + 0.5) * GRID_H) / 24 + "px";
-              col.appendChild(half);
-            }
-          }
+// ════════════════════════════════════════════════════════
+// FLOATING NAV
+// ════════════════════════════════════════════════════════
+(function () {
+  var nav = document.getElementById('belmontNav');
+  var toggle = document.getElementById('belmontNavToggle');
+  toggle.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var o = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', o ? 'true' : 'false');
+  });
+  document.addEventListener('click', function (e) {
+    if (!nav.contains(e.target)) {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
 
-          // Now line
-          if (isSameDay(day, new Date())) {
-            var nowLine = document.createElement("div");
-            nowLine.className = "now-line";
-            nowLine.style.top = timeToPx(new Date()) + "px";
-            var nowDot = document.createElement("div");
-            nowDot.className = "now-dot";
-            nowLine.appendChild(nowDot);
-            col.appendChild(nowLine);
-          }
-
-          // Events
-          var dayEvents = state.events.filter(function (ev) {
-            var filterKey = ev.status === "perk" ? "perk" : ev.status;
-            return isSameDay(ev.start, day) && state.filters[filterKey];
-          });
-
-          dayEvents.forEach(function (ev) {
-            var top = timeToPx(ev.start);
-            var height = Math.max(durationPx(ev.start, ev.end), 22);
-            var el = document.createElement("div");
-            el.className = "cal-event " + evStatusClass(ev);
-            el.style.top = top + "px";
-            el.style.height = height + "px";
-            el.innerHTML =
-              '<div class="cal-event-title">' +
-              ev.title +
-              '</div><div class="cal-event-time">' +
-              fmtTime(ev.start) +
-              " \u2013 " +
-              fmtTime(ev.end) +
-              "</div>";
-            el.addEventListener("click", function (e) {
-              e.stopPropagation();
-              if (ev.type === "claimable") openClaimableModal(ev);
-              else openDetailModal(ev);
-            });
-            col.appendChild(el);
-          });
-
-          // Drag to create
-          var dragSel = null;
-          var dragStartY = 0;
-          var dragging = false;
-
-          col.addEventListener("mousedown", function (e) {
-            if (e.target.classList.contains("cal-event")) return;
-            dragStartY = e.offsetY;
-            dragging = true;
-            dragSel = document.createElement("div");
-            dragSel.className = "drag-sel";
-            dragSel.style.top = dragStartY + "px";
-            dragSel.style.height = "2px";
-            col.appendChild(dragSel);
-          });
-
-          col.addEventListener("mousemove", function (e) {
-            if (!dragging || !dragSel) return;
-            var top = Math.min(dragStartY, e.offsetY);
-            var ht = Math.abs(e.offsetY - dragStartY);
-            dragSel.style.top = top + "px";
-            dragSel.style.height = Math.max(ht, 2) + "px";
-          });
-
-          col.addEventListener("mouseup", function (e) {
-            if (!dragging || !dragSel) return;
-            dragging = false;
-            var endY = e.offsetY;
-            var topY = Math.min(dragStartY, endY);
-            var botY = Math.max(dragStartY, endY);
-            if (dragSel.parentNode) dragSel.parentNode.removeChild(dragSel);
-            dragSel = null;
-
-            var startMins = Math.round(((topY / GRID_H) * 1440) / 30) * 30;
-            var endMins = Math.max(
-              startMins + 30,
-              Math.round(((botY / GRID_H) * 1440) / 30) * 30,
-            );
-
-            var start = new Date(day);
-            start.setHours(Math.floor(startMins / 60), startMins % 60, 0, 0);
-            var end = new Date(day);
-            end.setHours(Math.floor(endMins / 60), endMins % 60, 0, 0);
-
-            // Conflict check
-            var conflict = state.events.some(function (ev) {
-              return (
-                isSameDay(ev.start, day) &&
-                ev.type !== "claimable" &&
-                ev.type !== "system" &&
-                start < ev.end &&
-                end > ev.start
-              );
-            });
-
-            if (conflict) {
-              showConflict();
-              return;
-            }
-            openNewBookingModal(start, end);
-          });
-
-          col.addEventListener("mouseleave", function () {
-            if (dragging && dragSel) {
-              if (dragSel.parentNode) dragSel.parentNode.removeChild(dragSel);
-              dragSel = null;
-              dragging = false;
-            }
-          });
-
-          cols.appendChild(col);
-        });
-
-        // Scroll to 7am on first render
-        var scroll = document.getElementById("calScroll");
-        if (!scroll._scrolled) {
-          var sevenAm = new Date();
-          sevenAm.setHours(7, 0, 0, 0);
-          scroll.scrollTop = timeToPx(sevenAm);
-          scroll._scrolled = true;
-        }
-      }
-
-      // ════════════════════════════════════════════════════════
-      // UPCOMING SESSIONS
-      // ════════════════════════════════════════════════════════
-      function renderUpcoming() {
-        var now = new Date();
-        var upcoming = state.events
-          .filter(function (ev) {
-            return ev.type === "own" && ev.start >= now;
-          })
-          .sort(function (a, b) {
-            return a.start - b.start;
-          })
-          .slice(0, 5);
-        var list = document.getElementById("upcomingList");
-        if (!upcoming.length) {
-          list.innerHTML =
-            '<div class="upcoming-empty">No upcoming sessions</div>';
-          return;
-        }
-        list.innerHTML = upcoming
-          .map(function (ev) {
-            var bc = borderClass(ev);
-            return (
-              '<div class="upcoming-item ' +
-              bc +
-              '" data-id="' +
-              ev.id +
-              '">' +
-              '<div class="upcoming-title">' +
-              (ev.sessionType || "Session") +
-              "</div>" +
-              '<div class="upcoming-meta">' +
-              fmtDate(ev.start) +
-              "<br>" +
-              fmtTime(ev.start) +
-              " \u2013 " +
-              fmtTime(ev.end) +
-              "</div>" +
-              "</div>"
-            );
-          })
-          .join("");
-        list.querySelectorAll(".upcoming-item").forEach(function (el) {
-          el.addEventListener("click", function () {
-            var id = el.dataset.id;
-            var ev = state.events.find(function (e) {
-              return e.id === id;
-            });
-            if (ev) openDetailModal(ev);
-          });
-        });
-      }
-
-      // ════════════════════════════════════════════════════════
-      // FACILITY / STUDIO DROPDOWNS
-      // ════════════════════════════════════════════════════════
-      var facSel = document.getElementById("facSel");
-      var studioSel = document.getElementById("studioSel");
-
-      FACILITIES.forEach(function (f) {
-        var opt = document.createElement("option");
-        opt.value = f.id;
-        opt.textContent = f.name;
-        facSel.appendChild(opt);
-      });
-
-      function updateStudioSel() {
-        var fac = FACILITIES.find(function (f) {
-          return f.id === state.facId;
-        });
-        studioSel.innerHTML = "";
-        if (!fac || !fac.studios.length) {
-          var opt = document.createElement("option");
-          opt.textContent = "No rooms listed yet";
-          opt.disabled = true;
-          studioSel.appendChild(opt);
-          state.studioId = "";
-        } else {
-          fac.studios.forEach(function (s) {
-            var opt = document.createElement("option");
-            opt.value = s.id;
-            opt.textContent = s.name;
-            studioSel.appendChild(opt);
-          });
-          state.studioId = fac.studios[0].id;
-          // PLACEHOLDER: GET /api/bookings?resourceId=state.studioId
-          state.events = loadDemoEvents(state.studioId);
-        }
-      }
-
-      facSel.addEventListener("change", function () {
-        state.facId = this.value;
-        updateStudioSel();
-        renderCalendar();
-        renderUpcoming();
-      });
-
-      studioSel.addEventListener("change", function () {
-        state.studioId = this.value;
-        // PLACEHOLDER: GET /api/bookings?resourceId=state.studioId
-        state.events = loadDemoEvents(state.studioId);
-        renderCalendar();
-        renderUpcoming();
-      });
-
-      // ════════════════════════════════════════════════════════
-      // CONTROLS
-      // ════════════════════════════════════════════════════════
-      document
-        .getElementById("viewBtns")
-        .addEventListener("click", function (e) {
-          var btn = e.target.closest(".view-btn");
-          if (!btn) return;
-          state.view = btn.dataset.v;
-          document.querySelectorAll(".view-btn").forEach(function (b) {
-            b.classList.remove("active");
-          });
-          btn.classList.add("active");
-          renderCalendar();
-        });
-
-      document.getElementById("prevBtn").addEventListener("click", function () {
-        navigate(-1);
-      });
-      document.getElementById("nextBtn").addEventListener("click", function () {
-        navigate(1);
-      });
-      document
-        .getElementById("todayBtn")
-        .addEventListener("click", function () {
-          state.date = new Date();
-          renderCalendar();
-        });
-
-      document
-        .getElementById("jumpDate")
-        .addEventListener("change", function () {
-          if (this.value) {
-            state.date = new Date(this.value + "T12:00:00");
-            renderCalendar();
-          }
-        });
-
-      document
-        .getElementById("filterChips")
-        .addEventListener("click", function (e) {
-          var chip = e.target.closest(".chip");
-          if (!chip) return;
-          var s = chip.dataset.s;
-          state.filters[s] = !state.filters[s];
-          chip.classList.toggle("on", state.filters[s]);
-          renderCalendar();
-        });
-
-      document.getElementById("bookBtn").addEventListener("click", function () {
-        var now = new Date();
-        var mins = now.getMinutes() < 30 ? 30 : 0;
-        var hrs = mins === 0 ? now.getHours() + 1 : now.getHours();
-        var start = new Date(now);
-        start.setHours(hrs, mins, 0, 0);
-        var end = new Date(start.getTime() + 60 * 60 * 1000);
-        openNewBookingModal(start, end);
-      });
-
-      // ════════════════════════════════════════════════════════
-      // FLOATING NAV
-      // ════════════════════════════════════════════════════════
-      (function () {
-        var nav = document.getElementById("belmontNav");
-        var toggle = document.getElementById("belmontNavToggle");
-        toggle.addEventListener("click", function (e) {
-          e.stopPropagation();
-          var o = nav.classList.toggle("open");
-          toggle.setAttribute("aria-expanded", o ? "true" : "false");
-        });
-        document.addEventListener("click", function (e) {
-          if (!nav.contains(e.target)) {
-            nav.classList.remove("open");
-            toggle.setAttribute("aria-expanded", "false");
-          }
-        });
-      })();
-
-      // ════════════════════════════════════════════════════════
-      // INIT
-      // ════════════════════════════════════════════════════════
-      state.events = loadDemoEvents(state.studioId);
-      renderCalendar();
-      renderUpcoming();
-    </script>
-  </body>
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+state.events = loadDemoEvents(state.studioId);
+renderCalendar();
+renderUpcoming();
+</script>
+</body>
 </html>
