@@ -1,0 +1,2693 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio Booking — Belmont AET</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- React Big Calendar CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/react-big-calendar/1.8.7/css/react-big-calendar.min.css"
+    />
+    <style>
+      /* ══════════════════════════════════════════════
+       DESIGN TOKENS
+    ══════════════════════════════════════════════ */
+      :root {
+        --bg: #0b0b0f;
+        --surface: #13131b;
+        --surface2: #1b1b26;
+        --surface3: #21212f;
+        --border: #252533;
+        --border2: #2e2e40;
+        --accent: #c8a86b;
+        --accent-bg: rgba(200, 168, 107, 0.1);
+        --accent-glow: rgba(200, 168, 107, 0.18);
+        --text: #e6e2d9;
+        --muted: #8f8e9d;
+        --blue: #5b9cf6;
+        --blue-bg: rgba(91, 156, 246, 0.12);
+        --green: #4caf82;
+        --green-bg: rgba(76, 175, 130, 0.12);
+        --red: #f87171;
+        --red-bg: rgba(248, 113, 113, 0.12);
+        --orange: #fb923c;
+        --orange-bg: rgba(251, 146, 60, 0.12);
+        --purple: #c084fc;
+        --purple-bg: rgba(192, 132, 252, 0.12);
+        --grey: #6b7280;
+        --grey-bg: rgba(107, 114, 128, 0.12);
+
+        /* Session status colors */
+        --status-available: #4caf82;
+        --status-requested: #c8a86b;
+        --status-booked: #f87171;
+        --status-maintenance: #6b7280;
+        --status-event: #5b9cf6;
+        --status-perk: #c084fc;
+        --status-conflict: #fb923c;
+
+        --sidebar-width: 280px;
+        --header-height: 56px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        overflow: hidden;
+        height: 100vh;
+      }
+
+      /* ── Animated background ── */
+      .hero-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .hero-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.15;
+        animation: drift 18s ease-in-out infinite alternate;
+      }
+      .hero-orb-1 {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, #c8a86b 0%, transparent 70%);
+        top: -200px;
+        left: -200px;
+        animation-duration: 20s;
+      }
+      .hero-orb-2 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, #5b9cf6 0%, transparent 70%);
+        bottom: -100px;
+        right: -150px;
+        animation-duration: 16s;
+        animation-delay: -6s;
+        opacity: 0.1;
+      }
+      @keyframes drift {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(20px, -15px) scale(1.03);
+        }
+        100% {
+          transform: translate(-10px, 20px) scale(0.97);
+        }
+      }
+
+      /* ══════════════════════════════════════════════
+       APP SHELL
+    ══════════════════════════════════════════════ */
+      #root {
+        position: relative;
+        z-index: 1;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── Top header bar ── */
+      .app-header {
+        height: var(--header-height);
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 10;
+      }
+
+      .app-header-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .app-wordmark {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .app-header-divider {
+        width: 1px;
+        height: 20px;
+        background: var(--border);
+      }
+
+      .app-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      .app-header-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .user-greeting {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+      }
+
+      .user-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--accent-bg);
+        border: 1.5px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--accent);
+      }
+
+      /* Mobile menu toggle */
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--muted);
+        cursor: pointer;
+        padding: 5px 8px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-menu-btn svg {
+        width: 16px;
+        height: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+      }
+
+      /* ── Main layout ── */
+      .app-body {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+      }
+
+      /* ══════════════════════════════════════════════
+       SIDEBAR
+    ══════════════════════════════════════════════ */
+      .sidebar {
+        width: var(--sidebar-width);
+        flex-shrink: 0;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .sidebar-section {
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .sidebar-section:last-child {
+        border-bottom: none;
+      }
+
+      .sidebar-section-header {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .sidebar-section-header .dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--accent);
+        flex-shrink: 0;
+      }
+
+      /* ── Controls section ── */
+      .control-group {
+        margin-bottom: 12px;
+      }
+      .control-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .control-label {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      .control-select {
+        width: 100%;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        padding: 7px 28px 7px 10px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238f8e9d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 9px center;
+        transition: border-color 0.15s;
+      }
+
+      .control-select:focus {
+        border-color: var(--accent);
+      }
+      .control-select option {
+        background: var(--surface2);
+      }
+
+      /* View toggles */
+      .view-toggle-group {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+
+      .view-toggle-btn {
+        flex: 1;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 6px 4px;
+        cursor: pointer;
+        transition: all 0.12s;
+        text-align: center;
+        min-width: 0;
+      }
+
+      .view-toggle-btn.active {
+        background: var(--accent-bg);
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .view-toggle-btn:hover:not(.active) {
+        border-color: var(--muted);
+        color: var(--text);
+      }
+
+      /* Date picker */
+      .control-date {
+        width: 100%;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        padding: 7px 10px;
+        outline: none;
+        cursor: pointer;
+        transition: border-color 0.15s;
+      }
+
+      .control-date:focus {
+        border-color: var(--accent);
+      }
+      .control-date::-webkit-calendar-picker-indicator {
+        filter: invert(0.5);
+        cursor: pointer;
+      }
+
+      /* Session type filter */
+      .filter-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+
+      .filter-chip {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 3px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all 0.12s;
+        opacity: 0.5;
+      }
+
+      .filter-chip.active {
+        opacity: 1;
+      }
+
+      .chip-available {
+        background: var(--green-bg);
+        color: var(--green);
+        border-color: rgba(76, 175, 130, 0.3);
+      }
+      .chip-requested {
+        background: var(--accent-bg);
+        color: var(--accent);
+        border-color: rgba(200, 168, 107, 0.3);
+      }
+      .chip-booked {
+        background: var(--red-bg);
+        color: var(--red);
+        border-color: rgba(248, 113, 113, 0.3);
+      }
+      .chip-maintenance {
+        background: var(--grey-bg);
+        color: var(--grey);
+        border-color: rgba(107, 114, 128, 0.3);
+      }
+      .chip-event {
+        background: var(--blue-bg);
+        color: var(--blue);
+        border-color: rgba(91, 156, 246, 0.3);
+      }
+      .chip-perk {
+        background: var(--purple-bg);
+        color: var(--purple);
+        border-color: rgba(192, 132, 252, 0.3);
+      }
+
+      /* Book session button */
+      .book-btn {
+        width: 100%;
+        background: var(--accent);
+        border: none;
+        border-radius: 5px;
+        color: #0b0b0f;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 11px;
+        cursor: pointer;
+        transition:
+          opacity 0.15s,
+          transform 0.12s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+      }
+
+      .book-btn:hover {
+        opacity: 0.88;
+        transform: translateY(-1px);
+      }
+      .book-btn:active {
+        transform: translateY(0);
+      }
+      .book-btn svg {
+        width: 13px;
+        height: 13px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+
+      /* ── Upcoming Sessions ── */
+      .upcoming-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .upcoming-item {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        padding: 10px 12px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        position: relative;
+        border-left: 3px solid transparent;
+      }
+
+      .upcoming-item:hover {
+        border-color: var(--accent);
+        background: var(--surface3);
+      }
+
+      .upcoming-item-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 3px;
+        line-height: 1.3;
+      }
+
+      .upcoming-item-meta {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+
+      .upcoming-item-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 8px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 2px 5px;
+        border-radius: 2px;
+      }
+
+      /* Status border colors */
+      .border-available {
+        border-left-color: var(--status-available);
+      }
+      .border-requested {
+        border-left-color: var(--status-requested);
+      }
+      .border-booked {
+        border-left-color: var(--status-booked);
+      }
+      .border-event {
+        border-left-color: var(--status-event);
+      }
+      .border-perk {
+        border-left-color: var(--status-perk);
+      }
+
+      .upcoming-empty {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        color: var(--muted);
+        text-align: center;
+        padding: 12px 0;
+        opacity: 0.6;
+      }
+
+      /* ── Legend ── */
+      .legend {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+
+      /* ══════════════════════════════════════════════
+       CALENDAR AREA
+    ══════════════════════════════════════════════ */
+      .calendar-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background: var(--bg);
+      }
+
+      .calendar-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .cal-nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .cal-nav-btn {
+        width: 30px;
+        height: 30px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.12s;
+      }
+
+      .cal-nav-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .cal-nav-btn svg {
+        width: 12px;
+        height: 12px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+
+      .cal-today-btn {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        cursor: pointer;
+        transition: all 0.12s;
+      }
+
+      .cal-today-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .cal-date-label {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      .calendar-scroll-wrap {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0;
+      }
+
+      .calendar-inner {
+        height: 1600px; /* 24hrs × ~67px per hour */
+        padding: 8px;
+      }
+
+      /* ══════════════════════════════════════════════
+       REACT BIG CALENDAR OVERRIDES
+    ══════════════════════════════════════════════ */
+      .rbc-calendar {
+        background: transparent;
+        color: var(--text);
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        height: 100%;
+      }
+
+      /* Hide default toolbar — we have our own */
+      .rbc-toolbar {
+        display: none;
+      }
+
+      .rbc-time-view {
+        border: none;
+        background: transparent;
+      }
+      .rbc-time-content {
+        border-top: 1px solid var(--border);
+      }
+      .rbc-time-header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+      }
+      .rbc-time-header-content {
+        border-left: 1px solid var(--border);
+      }
+
+      .rbc-header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 8px 4px;
+        font-weight: 400;
+      }
+
+      .rbc-header.rbc-today {
+        color: var(--accent);
+      }
+
+      .rbc-time-slot {
+        border-color: var(--border);
+      }
+      .rbc-timeslot-group {
+        border-bottom-color: var(--border);
+        min-height: 50px;
+      }
+
+      .rbc-time-gutter .rbc-timeslot-group {
+        border-bottom: none;
+      }
+
+      .rbc-label {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+        padding: 0 8px;
+      }
+
+      .rbc-day-slot .rbc-time-slot {
+        border-top-color: var(--border);
+      }
+      .rbc-day-slot .rbc-timeslot-group {
+        border-bottom-color: var(--border2);
+      }
+
+      /* Current time indicator */
+      .rbc-current-time-indicator {
+        background: var(--red);
+        height: 2px;
+      }
+      .rbc-current-time-indicator::before {
+        background: var(--red);
+      }
+
+      .rbc-today {
+        background: rgba(200, 168, 107, 0.03);
+      }
+
+      /* Day column borders */
+      .rbc-day-slot {
+        border-left: 1px solid var(--border);
+      }
+
+      /* Month view */
+      .rbc-month-view {
+        background: transparent;
+        border-color: var(--border);
+      }
+      .rbc-month-row {
+        border-color: var(--border);
+      }
+      .rbc-day-bg {
+        border-color: var(--border);
+      }
+      .rbc-day-bg.rbc-today {
+        background: rgba(200, 168, 107, 0.04);
+      }
+      .rbc-off-range-bg {
+        background: rgba(0, 0, 0, 0.15);
+      }
+      .rbc-date-cell {
+        color: var(--muted);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        padding: 4px 8px;
+      }
+      .rbc-date-cell.rbc-now {
+        color: var(--accent);
+      }
+      .rbc-show-more {
+        color: var(--accent);
+        font-size: 11px;
+      }
+
+      /* ── Calendar event blocks ── */
+      .rbc-event {
+        border: none !important;
+        border-radius: 3px !important;
+        padding: 2px 6px !important;
+        font-size: 11px !important;
+        font-family: "Inter", sans-serif !important;
+        font-weight: 500 !important;
+        outline: none !important;
+        cursor: pointer !important;
+      }
+
+      .rbc-event:focus {
+        outline: none !important;
+      }
+      .rbc-event.rbc-selected {
+        outline: none !important;
+      }
+
+      /* Event status styles — set via className on event objects */
+      .event-available {
+        background: rgba(76, 175, 130, 0.2) !important;
+        border-left: 3px solid var(--status-available) !important;
+        color: var(--green) !important;
+      }
+
+      .event-requested {
+        background: rgba(200, 168, 107, 0.2) !important;
+        border-left: 3px solid var(--status-requested) !important;
+        color: var(--accent) !important;
+      }
+
+      .event-booked {
+        background: rgba(248, 113, 113, 0.2) !important;
+        border-left: 3px solid var(--status-booked) !important;
+        color: var(--red) !important;
+      }
+
+      .event-maintenance {
+        background: rgba(107, 114, 128, 0.2) !important;
+        border-left: 3px solid var(--status-maintenance) !important;
+        color: var(--grey) !important;
+      }
+
+      .event-event {
+        background: rgba(91, 156, 246, 0.2) !important;
+        border-left: 3px solid var(--status-event) !important;
+        color: var(--blue) !important;
+      }
+
+      .event-perk {
+        background: rgba(192, 132, 252, 0.2) !important;
+        border-left: 3px solid var(--status-perk) !important;
+        color: var(--purple) !important;
+      }
+
+      /* Claimable blocks — solid background to distinguish from drag-and-drop */
+      .event-claimable {
+        background: rgba(76, 175, 130, 0.35) !important;
+        border-left: 3px solid var(--status-available) !important;
+        border-top: 1px solid rgba(76, 175, 130, 0.5) !important;
+        color: var(--green) !important;
+      }
+
+      /* Drag ghost */
+      .rbc-addons-dnd-drag-preview {
+        opacity: 0.7;
+      }
+
+      /* Selection range */
+      .rbc-slot-selection {
+        background: rgba(200, 168, 107, 0.15) !important;
+        border: 1px dashed var(--accent) !important;
+        border-radius: 3px !important;
+      }
+
+      /* ══════════════════════════════════════════════
+       MODALS
+    ══════════════════════════════════════════════ */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(11, 11, 15, 0.85);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 20px;
+      }
+
+      .modal-overlay.open {
+        display: flex;
+      }
+
+      .modal {
+        width: 100%;
+        max-width: 520px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7);
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .modal-header {
+        padding: 16px 18px 14px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface2);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        flex-shrink: 0;
+      }
+
+      .modal-header-left {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .modal-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      .modal-subtitle {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+      }
+
+      .modal-close {
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 1;
+        padding: 4px 8px;
+        flex-shrink: 0;
+        transition:
+          border-color 0.12s,
+          color 0.12s;
+      }
+
+      .modal-close:hover {
+        border-color: var(--muted);
+        color: var(--text);
+      }
+
+      .modal-body {
+        padding: 16px 18px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        flex: 1;
+      }
+
+      .modal-field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .modal-field-label {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .modal-field-value {
+        font-size: 13px;
+        color: var(--text);
+        line-height: 1.5;
+      }
+
+      .modal-field-value.muted {
+        color: var(--muted);
+      }
+
+      .modal-input {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text);
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        padding: 8px 10px;
+        outline: none;
+        width: 100%;
+        transition: border-color 0.15s;
+      }
+
+      .modal-input:focus {
+        border-color: var(--accent);
+      }
+      .modal-input::placeholder {
+        color: var(--muted);
+      }
+
+      .modal-textarea {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text);
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        padding: 8px 10px;
+        outline: none;
+        width: 100%;
+        resize: vertical;
+        min-height: 80px;
+        transition: border-color 0.15s;
+      }
+
+      .modal-textarea:focus {
+        border-color: var(--accent);
+      }
+      .modal-textarea::placeholder {
+        color: var(--muted);
+      }
+
+      .modal-select {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        padding: 8px 28px 8px 10px;
+        outline: none;
+        width: 100%;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238f8e9d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 9px center;
+        transition: border-color 0.15s;
+      }
+
+      .modal-select:focus {
+        border-color: var(--accent);
+      }
+      .modal-select option {
+        background: var(--surface2);
+      }
+
+      .modal-time-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .modal-divider {
+        height: 1px;
+        background: var(--border);
+      }
+
+      .modal-placeholder-note {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        color: var(--orange);
+        letter-spacing: 0.04em;
+        padding: 6px 10px;
+        background: var(--orange-bg);
+        border: 1px solid rgba(251, 146, 60, 0.2);
+        border-radius: 3px;
+      }
+
+      .modal-footer {
+        display: flex;
+        gap: 8px;
+        padding: 14px 18px;
+        border-top: 1px solid var(--border);
+        background: var(--surface2);
+        flex-shrink: 0;
+        flex-wrap: wrap;
+      }
+
+      .modal-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 16px;
+        border-radius: 5px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          opacity 0.15s,
+          transform 0.12s;
+        border: none;
+      }
+
+      .modal-btn:hover {
+        opacity: 0.85;
+        transform: translateY(-1px);
+      }
+      .modal-btn:active {
+        transform: translateY(0);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #0b0b0f;
+      }
+      .btn-danger {
+        background: var(--red-bg);
+        color: var(--red);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+      .btn-ghost {
+        background: var(--surface);
+        color: var(--muted);
+        border: 1px solid var(--border);
+      }
+
+      /* ── Confirm dialog ── */
+      .confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(11, 11, 15, 0.92);
+        z-index: 300;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .confirm-overlay.open {
+        display: flex;
+      }
+
+      .confirm-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 24px;
+        max-width: 360px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7);
+      }
+
+      .confirm-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+
+      .confirm-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+
+      .confirm-message {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+
+      .confirm-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      /* ── Conflict flash ── */
+      .conflict-flash {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--red-bg);
+        border: 1px solid rgba(248, 113, 113, 0.4);
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        color: var(--red);
+        letter-spacing: 0.06em;
+        z-index: 400;
+        animation: flash-in 0.15s ease;
+      }
+
+      @keyframes flash-in {
+        from {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+      }
+
+      /* ══════════════════════════════════════════════
+       FLOATING NAV
+    ══════════════════════════════════════════════ */
+      .belmont-nav {
+        position: fixed;
+        z-index: 150;
+        bottom: 20px;
+        right: 20px;
+      }
+      .belmont-nav-toggle {
+        width: 38px;
+        height: 38px;
+        background: var(--surface);
+        border: 1.5px solid var(--accent);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.15s;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      }
+      .belmont-nav-toggle:hover {
+        background: var(--surface2);
+      }
+      .belmont-nav-toggle svg {
+        width: 16px;
+        height: 16px;
+      }
+      .belmont-nav-toggle svg rect {
+        fill: var(--accent);
+      }
+      .belmont-nav-menu {
+        position: absolute;
+        bottom: 46px;
+        right: 0;
+        min-width: 196px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transform: translateY(6px);
+        pointer-events: none;
+        transition:
+          opacity 0.15s ease,
+          transform 0.15s ease;
+      }
+      .belmont-nav.open .belmont-nav-menu {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .belmont-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 11px 14px;
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+        transition: background 0.12s;
+      }
+      .belmont-nav-link:last-child {
+        border-bottom: none;
+      }
+      .belmont-nav-link:hover {
+        background: var(--surface2);
+      }
+      .belmont-nav-link-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 5px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: var(--accent);
+      }
+      .belmont-nav-link-icon svg {
+        width: 15px;
+        height: 15px;
+      }
+      .belmont-nav-link-label {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .belmont-nav-link.is-current .belmont-nav-link-icon {
+        color: var(--blue);
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(91, 156, 246, 0.18);
+      }
+      .belmont-nav-link.is-current .belmont-nav-link-label {
+        color: var(--blue);
+      }
+
+      /* ══════════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════════ */
+      @media (max-width: 768px) {
+        body {
+          overflow: auto;
+        }
+        #root {
+          height: auto;
+          min-height: 100vh;
+        }
+        .app-body {
+          flex-direction: column;
+          overflow: visible;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+        }
+        .user-greeting {
+          display: none;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+          overflow: visible;
+        }
+
+        .sidebar-collapsible {
+          display: none;
+        }
+        .sidebar-collapsible.open {
+          display: block;
+        }
+
+        .sidebar-mobile-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 12px 16px;
+          cursor: pointer;
+          border-bottom: 1px solid var(--border);
+          background: var(--surface2);
+        }
+
+        .sidebar-mobile-toggle:last-of-type {
+          border-bottom: none;
+        }
+
+        .sidebar-mobile-toggle-label {
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--accent);
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .sidebar-mobile-toggle-chevron {
+          font-size: 12px;
+          color: var(--muted);
+          transition: transform 0.2s;
+        }
+
+        .sidebar-mobile-toggle.open .sidebar-mobile-toggle-chevron {
+          transform: rotate(180deg);
+        }
+
+        .calendar-area {
+          overflow: visible;
+        }
+        .calendar-scroll-wrap {
+          overflow: visible;
+          height: auto;
+        }
+        .calendar-inner {
+          height: 1400px;
+        }
+
+        .modal {
+          max-height: 95vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+
+    <!-- Conflict flash notification -->
+    <div class="conflict-flash" id="conflictFlash">
+      ⚠ Time slot unavailable — please choose another time
+    </div>
+
+    <!-- Floating nav -->
+    <div class="belmont-nav" id="belmontNav">
+      <button
+        class="belmont-nav-toggle"
+        id="belmontNavToggle"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <svg viewBox="0 0 16 16">
+          <rect x="2" y="4" width="12" height="1.6" rx="0.8" />
+          <rect x="2" y="7.2" width="12" height="1.6" rx="0.8" />
+          <rect x="2" y="10.4" width="12" height="1.6" rx="0.8" />
+        </svg>
+      </button>
+      <nav class="belmont-nav-menu">
+        <a
+          class="belmont-nav-link"
+          href="https://bradwintersmusic-cloud.github.io/studio-home/"
+        >
+          <span class="belmont-nav-link-icon"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
+              <path d="M9 21V12h6v9" /></svg
+          ></span>
+          <span class="belmont-nav-link-label">Studio Hub</span>
+        </a>
+        <a class="belmont-nav-link is-current" href="#">
+          <span class="belmont-nav-link-icon"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <path d="M16 2v4M8 2v4M3 10h18" /></svg
+          ></span>
+          <span class="belmont-nav-link-label">Booking</span>
+        </a>
+      </nav>
+    </div>
+
+    <div id="root">
+      <!-- App renders here via React -->
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="bookingModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-header-left">
+            <div class="modal-title" id="modalTitle">New Session</div>
+            <div class="modal-subtitle" id="modalSubtitle"></div>
+          </div>
+          <button class="modal-close" id="modalClose">&#x2715;</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- Populated by JS based on modal type -->
+        </div>
+        <div class="modal-footer" id="modalFooter">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm dialog -->
+    <div class="confirm-overlay" id="confirmOverlay">
+      <div class="confirm-box">
+        <div class="confirm-icon">⚠️</div>
+        <div class="confirm-title">Cancel Session?</div>
+        <div class="confirm-message">
+          This will cancel your booking for
+          <strong id="confirmSessionName"></strong>. This action cannot be
+          undone.
+        </div>
+        <div class="confirm-actions">
+          <button class="modal-btn btn-ghost" id="confirmNo">Keep It</button>
+          <button class="modal-btn btn-danger" id="confirmYes">
+            Yes, Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- React + ReactDOM + DnD + React Big Calendar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-big-calendar/1.8.7/lib/react-big-calendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+    <script>
+      // ════════════════════════════════════════════════════════════════
+      // PLACEHOLDER: Replace with real auth/session data from Next.js
+      // ════════════════════════════════════════════════════════════════
+      var CURRENT_USER = {
+        id: "usr_brad_winters",
+        name: "Brad Winters",
+        firstName: "Brad",
+        role: "student",
+        // PLACEHOLDER: JWT token or session cookie from auth provider
+        token: null,
+      };
+
+      // ════════════════════════════════════════════════════════════════
+      // PLACEHOLDER: Replace with API calls to your Next.js backend
+      // GET /api/facilities → returns facility list
+      // GET /api/facilities/:id/resources → returns studios in facility
+      // ════════════════════════════════════════════════════════════════
+      var FACILITIES = [
+        {
+          id: "fac_34mse",
+          name: "34 Music Square East",
+          studios: [
+            { id: "std_columbia_a", name: "Columbia Studio A" },
+            { id: "std_quonset", name: "Quonset Hut" },
+          ],
+        },
+        {
+          id: "fac_rem",
+          name: "REM Studios",
+          studios: [
+            { id: "std_rem_a", name: "REM A" },
+            { id: "std_rem_b", name: "REM B" },
+            { id: "std_rem_c", name: "REM C" },
+            { id: "std_rem_d", name: "REM D" },
+          ],
+        },
+        {
+          id: "fac_oceanway",
+          name: "Oceanway",
+          studios: [
+            { id: "std_oceanway_b", name: "Oceanway B" },
+            { id: "std_oceanway_d", name: "Oceanway D" },
+          ],
+        },
+        {
+          id: "fac_johnson",
+          name: "Johnson Center",
+          studios: [],
+          // PLACEHOLDER: Add rooms when available
+        },
+        {
+          id: "fac_spl",
+          name: "SPL",
+          studios: [],
+          // PLACEHOLDER: Add rooms when available
+        },
+      ];
+
+      // ════════════════════════════════════════════════════════════════
+      // DEMO DATA — Replace with GET /api/bookings?resourceId=:id&start=:date&end=:date
+      // ════════════════════════════════════════════════════════════════
+      function getDemoEvents(studioId) {
+        var now = new Date();
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        function d(dayOffset, hour, min) {
+          var dt = new Date(today);
+          dt.setDate(dt.getDate() + dayOffset);
+          dt.setHours(hour, min || 0, 0, 0);
+          return dt;
+        }
+
+        return [
+          // Brad's own sessions
+          {
+            id: "evt_001",
+            title: "Brad Winters — Academic",
+            start: d(0, 10, 0),
+            end: d(0, 12, 0),
+            status: "booked",
+            type: "dragdrop",
+            ownerId: "usr_brad_winters",
+            sessionType: "Academic",
+            attendees: "Brad Winters",
+            notes: "Advanced Mixing project — vocal comp session",
+            equipment: "",
+            studio: studioId,
+            className: "event-booked",
+          },
+          {
+            id: "evt_002",
+            title: "Brad Winters — Practice",
+            start: d(2, 14, 0),
+            end: d(2, 16, 0),
+            status: "requested",
+            type: "dragdrop",
+            ownerId: "usr_brad_winters",
+            sessionType: "Practice",
+            attendees: "Brad Winters, Sarah Kim",
+            notes: "Band rehearsal",
+            equipment: "",
+            studio: studioId,
+            className: "event-requested",
+          },
+          {
+            id: "evt_003",
+            title: "Brad Winters — Perk",
+            start: d(4, 9, 0),
+            end: d(4, 11, 0),
+            status: "booked",
+            type: "dragdrop",
+            ownerId: "usr_brad_winters",
+            sessionType: "Perk",
+            attendees: "Brad Winters",
+            notes: "",
+            equipment: "Neumann U87, Apollo Twin",
+            studio: studioId,
+            className: "event-perk",
+          },
+          // Other students' bookings
+          {
+            id: "evt_004",
+            title: "Session — Booked",
+            start: d(0, 13, 0),
+            end: d(0, 15, 0),
+            status: "booked",
+            type: "dragdrop",
+            ownerId: "usr_other",
+            sessionType: "Academic",
+            studio: studioId,
+            className: "event-booked",
+          },
+          {
+            id: "evt_005",
+            title: "Session — Booked",
+            start: d(1, 9, 0),
+            end: d(1, 11, 30),
+            status: "booked",
+            type: "dragdrop",
+            ownerId: "usr_other",
+            sessionType: "Practice",
+            studio: studioId,
+            className: "event-booked",
+          },
+          // Claimable blocks (instructor-placed)
+          {
+            id: "evt_006",
+            title: "Available — AET 3220",
+            start: d(1, 13, 0),
+            end: d(1, 15, 0),
+            status: "available",
+            type: "claimable",
+            instructor: "Dr. Patricia Moore",
+            course: "AET 3220 — Advanced Mixing",
+            assignment: "Mix Project 2",
+            ownerId: null,
+            studio: studioId,
+            className: "event-claimable",
+          },
+          {
+            id: "evt_007",
+            title: "Available — AET 2300",
+            start: d(3, 10, 0),
+            end: d(3, 12, 0),
+            status: "available",
+            type: "claimable",
+            instructor: "Prof. James Ellis",
+            course: "AET 2300 — Audio I",
+            assignment: null,
+            ownerId: null,
+            studio: studioId,
+            className: "event-claimable",
+          },
+          {
+            id: "evt_008",
+            title: "Available — AET 4230",
+            start: d(5, 14, 0),
+            end: d(5, 17, 0),
+            status: "available",
+            type: "claimable",
+            instructor: "Prof. James Ellis",
+            course: "AET 4230 — Live Sound",
+            assignment: "Live Recording Project",
+            ownerId: null,
+            studio: studioId,
+            className: "event-claimable",
+          },
+          // Maintenance / Events
+          {
+            id: "evt_009",
+            title: "Maintenance",
+            start: d(-1, 8, 0),
+            end: d(-1, 17, 0),
+            status: "maintenance",
+            type: "system",
+            ownerId: null,
+            notes: "Console calibration",
+            studio: studioId,
+            className: "event-maintenance",
+          },
+          {
+            id: "evt_010",
+            title: "Class — AET 3220",
+            start: d(0, 8, 0),
+            end: d(0, 9, 30),
+            status: "event",
+            type: "system",
+            ownerId: null,
+            studio: studioId,
+            className: "event-event",
+          },
+        ];
+      }
+
+      // ════════════════════════════════════════════════════════════════
+      // MODAL SYSTEM
+      // ════════════════════════════════════════════════════════════════
+      var bookingModal = document.getElementById("bookingModal");
+      var modalTitle = document.getElementById("modalTitle");
+      var modalSubtitle = document.getElementById("modalSubtitle");
+      var modalBody = document.getElementById("modalBody");
+      var modalFooter = document.getElementById("modalFooter");
+      var modalClose = document.getElementById("modalClose");
+      var confirmOverlay = document.getElementById("confirmOverlay");
+      var confirmSessionName = document.getElementById("confirmSessionName");
+      var confirmYes = document.getElementById("confirmYes");
+      var confirmNo = document.getElementById("confirmNo");
+      var conflictFlash = document.getElementById("conflictFlash");
+
+      var pendingCancelId = null;
+      var pendingNewEvent = null;
+      var onEventAdd = null;
+      var onEventUpdate = null;
+      var onEventDelete = null;
+
+      function openBookingModal() {
+        bookingModal.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeBookingModal() {
+        bookingModal.classList.remove("open");
+        document.body.style.overflow = "";
+        pendingNewEvent = null;
+      }
+
+      function formatModalDate(date) {
+        return date.toLocaleDateString("en-US", {
+          weekday: "short",
+          month: "short",
+          day: "numeric",
+        });
+      }
+
+      function formatModalTime(date) {
+        return date.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        });
+      }
+
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
+
+      function toTimeInput(date) {
+        return pad(date.getHours()) + ":" + pad(date.getMinutes());
+      }
+
+      function toDateInput(date) {
+        return (
+          date.getFullYear() +
+          "-" +
+          pad(date.getMonth() + 1) +
+          "-" +
+          pad(date.getDate())
+        );
+      }
+
+      // ── New drag-and-drop booking modal ──────────────────────────
+      function openNewBookingModal(slotInfo) {
+        pendingNewEvent = slotInfo;
+        modalTitle.textContent = "New Session";
+        modalSubtitle.textContent =
+          formatModalDate(slotInfo.start) +
+          " · " +
+          formatModalTime(slotInfo.start) +
+          " – " +
+          formatModalTime(slotInfo.end);
+
+        modalBody.innerHTML =
+          '<div class="modal-placeholder-note">⚡ PLACEHOLDER — Booking submission will POST to /api/bookings with authenticated user context</div>' +
+          '<div class="modal-field"><label class="modal-field-label">Session Type</label>' +
+          '<select class="modal-select" id="mSessionType"><option value="Academic">Academic</option><option value="Practice">Practice</option><option value="Perk">Perk</option></select></div>' +
+          '<div class="modal-time-row">' +
+          '<div class="modal-field"><label class="modal-field-label">Date</label><input type="date" class="modal-input" id="mDate" value="' +
+          toDateInput(slotInfo.start) +
+          '"></div>' +
+          "<div></div></div>" +
+          '<div class="modal-time-row">' +
+          '<div class="modal-field"><label class="modal-field-label">Start Time</label><input type="time" class="modal-input" id="mStart" value="' +
+          toTimeInput(slotInfo.start) +
+          '" step="1800"></div>' +
+          '<div class="modal-field"><label class="modal-field-label">End Time</label><input type="time" class="modal-input" id="mEnd" value="' +
+          toTimeInput(slotInfo.end) +
+          '" step="1800"></div>' +
+          "</div>" +
+          '<div class="modal-field"><label class="modal-field-label">Attendees <span style="color:var(--muted);font-size:10px;">(free text — will be user lookup)</span></label>' +
+          '<input type="text" class="modal-input" id="mAttendees" placeholder="Brad Winters, Sarah Kim..." value="' +
+          CURRENT_USER.name +
+          '"></div>' +
+          '<div class="modal-field"><label class="modal-field-label">Notes</label>' +
+          '<textarea class="modal-textarea" id="mNotes" placeholder="Session details, goals, requirements..."></textarea></div>' +
+          '<div class="modal-field"><label class="modal-field-label">Equipment Requests <span style="color:var(--orange);font-size:10px;">— placeholder, connects to equipment table</span></label>' +
+          '<input type="text" class="modal-input" id="mEquipment" placeholder="Neumann U87, Apollo Twin..."></div>';
+
+        modalFooter.innerHTML =
+          '<button class="modal-btn btn-primary" id="mSubmit">Request Session</button>' +
+          '<button class="modal-btn btn-ghost" id="mCancel">Cancel</button>';
+
+        document
+          .getElementById("mSubmit")
+          .addEventListener("click", function () {
+            var dateVal = document.getElementById("mDate").value;
+            var startVal = document.getElementById("mStart").value;
+            var endVal = document.getElementById("mEnd").value;
+            var start = new Date(dateVal + "T" + startVal);
+            var end = new Date(dateVal + "T" + endVal);
+            var sessionType = document.getElementById("mSessionType").value;
+            var attendees = document.getElementById("mAttendees").value;
+            var notes = document.getElementById("mNotes").value;
+            var equipment = document.getElementById("mEquipment").value;
+
+            var newEvent = {
+              id: "evt_new_" + Date.now(),
+              title: CURRENT_USER.name + " — " + sessionType,
+              start: start,
+              end: end,
+              status: "requested",
+              type: "dragdrop",
+              ownerId: CURRENT_USER.id,
+              sessionType: sessionType,
+              attendees: attendees,
+              notes: notes,
+              equipment: equipment,
+              className: "event-requested",
+              // PLACEHOLDER: After API call, update status based on approval_policy result
+            };
+
+            if (onEventAdd) {
+              onEventAdd(newEvent);
+            }
+            closeBookingModal();
+          });
+
+        document
+          .getElementById("mCancel")
+          .addEventListener("click", closeBookingModal);
+        openBookingModal();
+      }
+
+      // ── Claimable block modal ─────────────────────────────────────
+      function openClaimableModal(event) {
+        modalTitle.textContent = "Claimable Session";
+        modalSubtitle.textContent =
+          formatModalDate(event.start) +
+          " · " +
+          formatModalTime(event.start) +
+          " – " +
+          formatModalTime(event.end);
+
+        modalBody.innerHTML =
+          '<div class="modal-placeholder-note">⚡ PLACEHOLDER — Claiming will POST to /api/bookings/claim/:slotId with user auth</div>' +
+          '<div class="modal-field"><label class="modal-field-label">Instructor</label><div class="modal-field-value">' +
+          (event.instructor || "—") +
+          "</div></div>" +
+          '<div class="modal-field"><label class="modal-field-label">Course</label><div class="modal-field-value">' +
+          (event.course || "—") +
+          "</div></div>" +
+          (event.assignment
+            ? '<div class="modal-field"><label class="modal-field-label">Assignment</label><div class="modal-field-value">' +
+              event.assignment +
+              "</div></div>"
+            : "") +
+          '<div class="modal-field"><label class="modal-field-label">Date</label><div class="modal-field-value">' +
+          formatModalDate(event.start) +
+          "</div></div>" +
+          '<div class="modal-field"><label class="modal-field-label">Time</label><div class="modal-field-value">' +
+          formatModalTime(event.start) +
+          " – " +
+          formatModalTime(event.end) +
+          "</div></div>" +
+          '<div class="modal-divider"></div>' +
+          '<div class="modal-field"><label class="modal-field-label">Notes</label><textarea class="modal-textarea" id="mClaimNotes" placeholder="Any notes for this session..."></textarea></div>';
+
+        modalFooter.innerHTML =
+          '<button class="modal-btn btn-primary" id="mClaim">Claim This Slot</button>' +
+          '<button class="modal-btn btn-ghost" id="mClaimCancel">Close</button>';
+
+        document
+          .getElementById("mClaim")
+          .addEventListener("click", function () {
+            // PLACEHOLDER: POST /api/bookings/claim/:slotId
+            if (onEventUpdate) {
+              onEventUpdate(event.id, {
+                title: CURRENT_USER.name + " — " + (event.course || "Claimed"),
+                status: "requested",
+                type: "dragdrop",
+                ownerId: CURRENT_USER.id,
+                className: "event-requested",
+              });
+            }
+            closeBookingModal();
+          });
+
+        document
+          .getElementById("mClaimCancel")
+          .addEventListener("click", closeBookingModal);
+        openBookingModal();
+      }
+
+      // ── Existing session detail modal ─────────────────────────────
+      function openSessionDetailModal(event) {
+        var isOwner = event.ownerId === CURRENT_USER.id;
+        modalTitle.textContent = event.sessionType || "Session Details";
+        modalSubtitle.textContent =
+          formatModalDate(event.start) +
+          " · " +
+          formatModalTime(event.start) +
+          " – " +
+          formatModalTime(event.end);
+
+        var bodyHtml =
+          '<div class="modal-field"><label class="modal-field-label">Status</label>' +
+          '<div class="modal-field-value"><span class="filter-chip active chip-' +
+          event.status +
+          '" style="cursor:default;">' +
+          event.status +
+          "</span></div></div>" +
+          '<div class="modal-field"><label class="modal-field-label">Session Type</label><div class="modal-field-value">' +
+          (event.sessionType || "—") +
+          "</div></div>" +
+          '<div class="modal-field"><label class="modal-field-label">Date</label><div class="modal-field-value">' +
+          formatModalDate(event.start) +
+          "</div></div>" +
+          '<div class="modal-field"><label class="modal-field-label">Time</label><div class="modal-field-value">' +
+          formatModalTime(event.start) +
+          " – " +
+          formatModalTime(event.end) +
+          "</div></div>";
+
+        if (event.attendees) {
+          bodyHtml +=
+            '<div class="modal-field"><label class="modal-field-label">Attendees</label><div class="modal-field-value">' +
+            event.attendees +
+            "</div></div>";
+        }
+        if (event.notes) {
+          bodyHtml +=
+            '<div class="modal-field"><label class="modal-field-label">Notes</label><div class="modal-field-value muted">' +
+            event.notes +
+            "</div></div>";
+        }
+        if (event.equipment) {
+          bodyHtml +=
+            '<div class="modal-field"><label class="modal-field-label">Equipment</label><div class="modal-field-value muted">' +
+            event.equipment +
+            "</div></div>";
+        }
+
+        if (isOwner) {
+          bodyHtml +=
+            '<div class="modal-placeholder-note">⚡ PLACEHOLDER — Cancel will DELETE /api/bookings/:id (enforces min_cancellation_notice_hours policy)</div>';
+        }
+
+        modalBody.innerHTML = bodyHtml;
+
+        var footerHtml =
+          '<button class="modal-btn btn-ghost" id="mDetailClose">Close</button>';
+        if (isOwner) {
+          footerHtml =
+            '<button class="modal-btn btn-danger" id="mCancelSession">Cancel Booking</button>' +
+            footerHtml;
+        }
+        modalFooter.innerHTML = footerHtml;
+
+        document
+          .getElementById("mDetailClose")
+          .addEventListener("click", closeBookingModal);
+
+        if (isOwner) {
+          document
+            .getElementById("mCancelSession")
+            .addEventListener("click", function () {
+              pendingCancelId = event.id;
+              confirmSessionName.textContent =
+                (event.sessionType || "this session") +
+                " on " +
+                formatModalDate(event.start);
+              confirmOverlay.classList.add("open");
+            });
+        }
+
+        openBookingModal();
+      }
+
+      // Confirm cancel
+      confirmYes.addEventListener("click", function () {
+        if (pendingCancelId && onEventDelete) {
+          onEventDelete(pendingCancelId);
+          // PLACEHOLDER: DELETE /api/bookings/:pendingCancelId
+        }
+        confirmOverlay.classList.remove("open");
+        closeBookingModal();
+        pendingCancelId = null;
+      });
+
+      confirmNo.addEventListener("click", function () {
+        confirmOverlay.classList.remove("open");
+        pendingCancelId = null;
+      });
+
+      modalClose.addEventListener("click", closeBookingModal);
+      bookingModal.addEventListener("click", function (e) {
+        if (e.target === bookingModal) {
+          closeBookingModal();
+        }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeBookingModal();
+          confirmOverlay.classList.remove("open");
+        }
+      });
+
+      // Conflict flash
+      function showConflictFlash() {
+        conflictFlash.style.display = "block";
+        setTimeout(function () {
+          conflictFlash.style.display = "none";
+        }, 2500);
+      }
+
+      // ════════════════════════════════════════════════════════════════
+      // REACT APP
+      // ════════════════════════════════════════════════════════════════
+      var e = React.createElement;
+      var useState = React.useState;
+      var useEffect = React.useEffect;
+      var useCallback = React.useCallback;
+      var useMemo = React.useMemo;
+
+      // Set up moment localizer
+      var localizer = ReactBigCalendar.momentLocalizer(moment);
+
+      function BookingDashboard() {
+        var [selectedFacilityId, setSelectedFacilityId] = useState(
+          FACILITIES[0].id,
+        );
+        var [selectedStudioId, setSelectedStudioId] = useState(
+          FACILITIES[0].studios[0] ? FACILITIES[0].studios[0].id : "",
+        );
+        var [calView, setCalView] = useState("week");
+        var [calDate, setCalDate] = useState(new Date());
+        var [events, setEvents] = useState([]);
+        var [activeFilters, setActiveFilters] = useState([
+          "available",
+          "requested",
+          "booked",
+          "maintenance",
+          "event",
+          "perk",
+        ]);
+        var [mobileControlsOpen, setMobileControlsOpen] = useState(false);
+        var [mobileUpcomingOpen, setMobileUpcomingOpen] = useState(false);
+        var [jumpDate, setJumpDate] = useState("");
+
+        // Load demo events when studio changes
+        // PLACEHOLDER: Replace with useEffect → fetch("/api/bookings?resourceId=" + selectedStudioId + "&start=...&end=...")
+        useEffect(
+          function () {
+            if (selectedStudioId) {
+              setEvents(getDemoEvents(selectedStudioId));
+            } else {
+              setEvents([]);
+            }
+          },
+          [selectedStudioId],
+        );
+
+        // Wire modal callbacks
+        useEffect(function () {
+          onEventAdd = function (newEvent) {
+            setEvents(function (prev) {
+              return prev.concat([newEvent]);
+            });
+          };
+          onEventUpdate = function (id, updates) {
+            setEvents(function (prev) {
+              return prev.map(function (ev) {
+                return ev.id === id ? Object.assign({}, ev, updates) : ev;
+              });
+            });
+          };
+          onEventDelete = function (id) {
+            setEvents(function (prev) {
+              return prev.filter(function (ev) {
+                return ev.id !== id;
+              });
+            });
+          };
+        }, []);
+
+        // Current facility's studios
+        var currentFacility = useMemo(
+          function () {
+            return (
+              FACILITIES.find(function (f) {
+                return f.id === selectedFacilityId;
+              }) || FACILITIES[0]
+            );
+          },
+          [selectedFacilityId],
+        );
+
+        // Filter events by active status filters
+        var filteredEvents = useMemo(
+          function () {
+            return events.filter(function (ev) {
+              return activeFilters.indexOf(ev.status) !== -1;
+            });
+          },
+          [events, activeFilters],
+        );
+
+        // Upcoming sessions for current user
+        var upcomingSessions = useMemo(
+          function () {
+            var now = new Date();
+            return events
+              .filter(function (ev) {
+                return ev.ownerId === CURRENT_USER.id && ev.start >= now;
+              })
+              .sort(function (a, b) {
+                return a.start - b.start;
+              })
+              .slice(0, 5);
+          },
+          [events],
+        );
+
+        // Facility change
+        function handleFacilityChange(e) {
+          var fid = e.target.value;
+          setSelectedFacilityId(fid);
+          var fac = FACILITIES.find(function (f) {
+            return f.id === fid;
+          });
+          setSelectedStudioId(
+            fac && fac.studios.length ? fac.studios[0].id : "",
+          );
+        }
+
+        // Slot selection (drag new booking)
+        var handleSelectSlot = useCallback(
+          function (slotInfo) {
+            // Check for conflicts
+            var conflict = events.some(function (ev) {
+              return (
+                ev.status !== "available" &&
+                slotInfo.start < ev.end &&
+                slotInfo.end > ev.start
+              );
+            });
+
+            if (conflict) {
+              showConflictFlash();
+              return;
+            }
+
+            openNewBookingModal(slotInfo);
+          },
+          [events],
+        );
+
+        // Event click
+        var handleSelectEvent = useCallback(function (event) {
+          if (event.type === "claimable") {
+            openClaimableModal(event);
+          } else {
+            openSessionDetailModal(event);
+          }
+        }, []);
+
+        // Event style getter
+        function eventPropGetter(event) {
+          return { className: event.className || "" };
+        }
+
+        // Toggle filter
+        function toggleFilter(status) {
+          setActiveFilters(function (prev) {
+            if (prev.indexOf(status) !== -1) {
+              return prev.filter(function (f) {
+                return f !== status;
+              });
+            }
+            return prev.concat([status]);
+          });
+        }
+
+        // Jump to date
+        function handleJumpDate(val) {
+          setJumpDate(val);
+          if (val) {
+            setCalDate(new Date(val + "T12:00:00"));
+          }
+        }
+
+        // Book session button → opens modal with next 30-min slot
+        function handleBookBtn() {
+          var now = new Date();
+          var mins = now.getMinutes();
+          var roundedMins = mins < 30 ? 30 : 60;
+          var start = new Date(now);
+          start.setMinutes(roundedMins, 0, 0);
+          if (roundedMins === 60) {
+            start.setHours(start.getHours() + 1);
+            start.setMinutes(0);
+          }
+          var end = new Date(start.getTime() + 60 * 60 * 1000);
+          openNewBookingModal({ start: start, end: end });
+        }
+
+        // Sidebar content
+        var sidebarContent = [
+          // Controls section
+          e(
+            "div",
+            { className: "sidebar-section", key: "controls" },
+            e(
+              "div",
+              { className: "sidebar-section-header" },
+              e("div", { className: "dot" }),
+              "Controls",
+            ),
+            // Facility
+            e(
+              "div",
+              { className: "control-group" },
+              e("label", { className: "control-label" }, "Facility"),
+              e(
+                "select",
+                {
+                  className: "control-select",
+                  value: selectedFacilityId,
+                  onChange: handleFacilityChange,
+                },
+                FACILITIES.map(function (f) {
+                  return e("option", { key: f.id, value: f.id }, f.name);
+                }),
+              ),
+            ),
+            // Studio
+            e(
+              "div",
+              { className: "control-group" },
+              e("label", { className: "control-label" }, "Studio / Room"),
+              currentFacility.studios.length
+                ? e(
+                    "select",
+                    {
+                      className: "control-select",
+                      value: selectedStudioId,
+                      onChange: function (ev) {
+                        setSelectedStudioId(ev.target.value);
+                      },
+                    },
+                    currentFacility.studios.map(function (s) {
+                      return e("option", { key: s.id, value: s.id }, s.name);
+                    }),
+                  )
+                : e(
+                    "select",
+                    { className: "control-select", disabled: true },
+                    e("option", null, "No rooms listed yet"),
+                  ),
+            ),
+            // View
+            e(
+              "div",
+              { className: "control-group" },
+              e("label", { className: "control-label" }, "View"),
+              e(
+                "div",
+                { className: "view-toggle-group" },
+                ["day", "3days", "week", "month"].map(function (v) {
+                  return e(
+                    "button",
+                    {
+                      key: v,
+                      className:
+                        "view-toggle-btn" + (calView === v ? " active" : ""),
+                      onClick: function () {
+                        setCalView(v);
+                      },
+                    },
+                    v === "3days"
+                      ? "3 Day"
+                      : v.charAt(0).toUpperCase() + v.slice(1),
+                  );
+                }),
+              ),
+            ),
+            // Jump to date
+            e(
+              "div",
+              { className: "control-group" },
+              e("label", { className: "control-label" }, "Jump to Date"),
+              e("input", {
+                type: "date",
+                className: "control-date",
+                value: jumpDate,
+                onChange: function (ev) {
+                  handleJumpDate(ev.target.value);
+                },
+              }),
+            ),
+            // Session type filter
+            e(
+              "div",
+              { className: "control-group" },
+              e("label", { className: "control-label" }, "Filter by Status"),
+              e(
+                "div",
+                { className: "filter-chips" },
+                [
+                  {
+                    key: "available",
+                    label: "Available",
+                    cls: "chip-available",
+                  },
+                  { key: "requested", label: "Pending", cls: "chip-requested" },
+                  { key: "booked", label: "Booked", cls: "chip-booked" },
+                  {
+                    key: "maintenance",
+                    label: "Maintenance",
+                    cls: "chip-maintenance",
+                  },
+                  { key: "event", label: "Event/Class", cls: "chip-event" },
+                  { key: "perk", label: "Perk", cls: "chip-perk" },
+                ].map(function (f) {
+                  return e(
+                    "span",
+                    {
+                      key: f.key,
+                      className:
+                        "filter-chip " +
+                        f.cls +
+                        (activeFilters.indexOf(f.key) !== -1 ? " active" : ""),
+                      onClick: function () {
+                        toggleFilter(f.key);
+                      },
+                    },
+                    f.label,
+                  );
+                }),
+              ),
+            ),
+            // Book button
+            e(
+              "button",
+              { className: "book-btn", onClick: handleBookBtn },
+              e(
+                "svg",
+                { viewBox: "0 0 16 16" },
+                e("line", { x1: "8", y1: "2", x2: "8", y2: "14" }),
+                e("line", { x1: "2", y1: "8", x2: "14", y2: "8" }),
+              ),
+              "Book a Session",
+            ),
+          ),
+
+          // Upcoming sessions section
+          e(
+            "div",
+            { className: "sidebar-section", key: "upcoming" },
+            e(
+              "div",
+              { className: "sidebar-section-header" },
+              e("div", { className: "dot" }),
+              "Upcoming Sessions",
+            ),
+            upcomingSessions.length
+              ? e(
+                  "div",
+                  { className: "upcoming-list" },
+                  upcomingSessions.map(function (ev) {
+                    return e(
+                      "div",
+                      {
+                        key: ev.id,
+                        className: "upcoming-item border-" + ev.status,
+                        onClick: function () {
+                          openSessionDetailModal(ev);
+                        },
+                      },
+                      e(
+                        "div",
+                        { className: "upcoming-item-title" },
+                        ev.sessionType || "Session",
+                      ),
+                      e(
+                        "div",
+                        { className: "upcoming-item-meta" },
+                        formatModalDate(ev.start) +
+                          "\n" +
+                          formatModalTime(ev.start) +
+                          " – " +
+                          formatModalTime(ev.end),
+                      ),
+                    );
+                  }),
+                )
+              : e(
+                  "div",
+                  { className: "upcoming-empty" },
+                  "No upcoming sessions",
+                ),
+          ),
+
+          // Legend section
+          e(
+            "div",
+            { className: "sidebar-section", key: "legend" },
+            e(
+              "div",
+              { className: "sidebar-section-header" },
+              e("div", { className: "dot" }),
+              "Legend",
+            ),
+            e(
+              "div",
+              { className: "legend" },
+              [
+                {
+                  color: "var(--status-available)",
+                  label: "Available / Claimable",
+                },
+                { color: "var(--status-requested)", label: "Pending Approval" },
+                { color: "var(--status-booked)", label: "Booked / Confirmed" },
+                { color: "var(--status-event)", label: "Event / Class" },
+                { color: "var(--status-perk)", label: "Perk / Flex" },
+                {
+                  color: "var(--status-maintenance)",
+                  label: "Maintenance / Blackout",
+                },
+              ].map(function (item, i) {
+                return e(
+                  "div",
+                  { key: i, className: "legend-item" },
+                  e("div", {
+                    className: "legend-dot",
+                    style: { background: item.color },
+                  }),
+                  item.label,
+                );
+              }),
+            ),
+          ),
+        ];
+
+        // Calendar view mapping
+        var rbc = ReactBigCalendar;
+        var viewMap = {
+          day: rbc.Views.DAY,
+          "3days": rbc.Views.WORK_WEEK,
+          week: rbc.Views.WEEK,
+          month: rbc.Views.MONTH,
+        };
+        var currentRBCView = viewMap[calView] || rbc.Views.WEEK;
+
+        // Studio display name
+        var studioName = "";
+        var s = currentFacility.studios.find(function (st) {
+          return st.id === selectedStudioId;
+        });
+        if (s) {
+          studioName = s.name;
+        }
+
+        return e(
+          "div",
+          { id: "root" },
+
+          // App header
+          e(
+            "div",
+            { className: "app-header" },
+            e(
+              "div",
+              { className: "app-header-left" },
+              e("div", { className: "app-wordmark" }, "Belmont · AET"),
+              e("div", { className: "app-header-divider" }),
+              e("div", { className: "app-title" }, "Studio Booking"),
+            ),
+            e(
+              "div",
+              { className: "app-header-right" },
+              e("div", { className: "user-greeting" }, "Let's book it, Brad!"),
+              e(
+                "div",
+                { className: "user-avatar" },
+                CURRENT_USER.firstName.charAt(0),
+              ),
+            ),
+          ),
+
+          // Body
+          e(
+            "div",
+            { className: "app-body" },
+
+            // ── SIDEBAR ──
+            e(
+              "div",
+              { className: "sidebar" },
+
+              // Desktop: render all sections directly
+              e(
+                "div",
+                {
+                  className: "d-sidebar-inner",
+                  style: { display: "contents" },
+                },
+                sidebarContent.map(function (section, i) {
+                  // On mobile we wrap each section in a collapsible toggle
+                  return section;
+                }),
+              ),
+            ),
+
+            // ── CALENDAR AREA ──
+            e(
+              "div",
+              { className: "calendar-area" },
+
+              // Calendar toolbar
+              e(
+                "div",
+                { className: "calendar-toolbar" },
+                e(
+                  "div",
+                  { className: "cal-nav" },
+                  e(
+                    "button",
+                    {
+                      className: "cal-nav-btn",
+                      onClick: function () {
+                        var d = new Date(calDate);
+                        if (calView === "day") {
+                          d.setDate(d.getDate() - 1);
+                        } else if (calView === "week" || calView === "3days") {
+                          d.setDate(d.getDate() - 7);
+                        } else {
+                          d.setMonth(d.getMonth() - 1);
+                        }
+                        setCalDate(d);
+                      },
+                    },
+                    e(
+                      "svg",
+                      { viewBox: "0 0 16 16" },
+                      e("polyline", { points: "10,4 6,8 10,12" }),
+                    ),
+                  ),
+                  e(
+                    "button",
+                    {
+                      className: "cal-today-btn",
+                      onClick: function () {
+                        setCalDate(new Date());
+                      },
+                    },
+                    "Today",
+                  ),
+                  e(
+                    "button",
+                    {
+                      className: "cal-nav-btn",
+                      onClick: function () {
+                        var d = new Date(calDate);
+                        if (calView === "day") {
+                          d.setDate(d.getDate() + 1);
+                        } else if (calView === "week" || calView === "3days") {
+                          d.setDate(d.getDate() + 7);
+                        } else {
+                          d.setMonth(d.getMonth() + 1);
+                        }
+                        setCalDate(d);
+                      },
+                    },
+                    e(
+                      "svg",
+                      { viewBox: "0 0 16 16" },
+                      e("polyline", { points: "6,4 10,8 6,12" }),
+                    ),
+                  ),
+                ),
+                e(
+                  "div",
+                  { className: "cal-date-label" },
+                  studioName
+                    ? studioName +
+                        " — " +
+                        calDate.toLocaleDateString("en-US", {
+                          month: "long",
+                          year: "numeric",
+                        })
+                    : calDate.toLocaleDateString("en-US", {
+                        month: "long",
+                        year: "numeric",
+                      }),
+                ),
+              ),
+
+              // Calendar scroll container
+              e(
+                "div",
+                { className: "calendar-scroll-wrap" },
+                e(
+                  "div",
+                  { className: "calendar-inner" },
+                  e(rbc.Calendar, {
+                    localizer: localizer,
+                    events: filteredEvents,
+                    view: currentRBCView,
+                    onView: function () {},
+                    date: calDate,
+                    onNavigate: setCalDate,
+                    selectable: true,
+                    onSelectSlot: handleSelectSlot,
+                    onSelectEvent: handleSelectEvent,
+                    eventPropGetter: eventPropGetter,
+                    step: 30,
+                    timeslots: 2,
+                    scrollToTime: new Date(new Date().setHours(7, 0, 0, 0)),
+                    style: { height: "100%" },
+                    formats: {
+                      timeGutterFormat: function (date) {
+                        return moment(date).format("h A");
+                      },
+                    },
+                  }),
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+
+      // Mount
+      ReactDOM.render(e(BookingDashboard), document.getElementById("root"));
+
+      // Nav
+      (function () {
+        var nav = document.getElementById("belmontNav");
+        var toggle = document.getElementById("belmontNavToggle");
+        toggle.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var o = nav.classList.toggle("open");
+          toggle.setAttribute("aria-expanded", o ? "true" : "false");
+        });
+        document.addEventListener("click", function (e) {
+          if (!nav.contains(e.target)) {
+            nav.classList.remove("open");
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
